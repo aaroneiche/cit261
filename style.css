@@ -1,0 +1,13 @@
+/* General styles for the site */
+
+body {
+    display: flex;
+    align-content: flex-center;
+    background-color: #232323;
+    color: #aaa; 
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.section {
+    width: 80%;
+}
