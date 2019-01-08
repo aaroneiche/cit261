@@ -2,7 +2,7 @@
 
 body {
     display: flex;
-    align-content: flex-center;
+    flex-direction: column;
     background-color: #232323;
     color: #aaa; 
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
@@ -12,7 +12,35 @@ a {
     color: rgb(242, 255, 168)
 }
 
+/* This makes sure that links without hrefs look/behave 
+the same as links with.*/
+a:not([href]) {
+    cursor: pointer;
+    text-decoration: underline;
+}
 
 .section {
     width: 80%;
+}
+
+.block {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    top: -500px;
+    left: -400px; 
+
+    border: 2px solid white;
+}
+
+pre#terminal {
+    background-color: black;
+    color: limegreen;
+    font-family: 'Courier New', Courier, monospace;
+
+    height: 10em;
+    width: 100%;
+    border: 1px solid #aaa;
+    overflow-y: hidden;
+    text-align: left;
 }
