@@ -34,13 +34,26 @@ a:not([href]) {
 }
 
 pre#terminal {
+    position: relative;
     background-color: black;
     color: limegreen;
     font-family: 'Courier New', Courier, monospace;
-
     height: 10em;
+    margin: 0;
     width: 100%;
-    border: 1px solid #aaa;
-    overflow-y: hidden;
+    overflow-y: hidden;    
     text-align: left;
+}
+pre#terminal div {
+    position: absolute;
+    box-sizing: border-box;
+    border-style: ridge;
+    border-width: 0px;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #232323;
+    transition-property: left;
+    transition-duration: 1000ms;
 }
