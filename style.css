@@ -29,8 +29,6 @@ a:not([href]) {
     position: relative;
     width: 200px;
     height: 200px;
-    /* top: -500px;
-    left: -400px;  */
 
     margin: 10px;
     padding: 5px;
@@ -48,9 +46,7 @@ a:not([href]) {
     box-shadow: 5px 5px 20px 1px #aaa;
 }
 
-
 .block .title {
-    
     margin: -5px;
     padding-left: 2px;
     /* width: 100%; */
