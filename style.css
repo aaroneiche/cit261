@@ -6,6 +6,7 @@ body {
     background-color: #232323;
     color: #aaa; 
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    align-items: center;
 }
 
 a {
@@ -20,7 +21,7 @@ a:not([href]) {
 }
 
 .section {
-    width: 80%;
+    width: 70%;
     display: flex;
     flex-wrap: wrap;
 }
@@ -44,6 +45,7 @@ a:not([href]) {
     transition-property: box-shadow;
     transition-duration: 300ms;
     box-shadow: 5px 5px 20px 1px #aaa;
+    cursor: pointer;
 }
 
 .block .title {
