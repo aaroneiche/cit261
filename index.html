@@ -9,37 +9,49 @@
 </head>
 <body>
     <div class="section">
-            
         <div>
             <h1>Welcome!</h1>
             <p>This is a page showing work that I've done for school. If you'd like to see some of the work that I've done extra-curricularly (in my 13 years in professional software development) please go to <a target="_blank" href="https://aeiche.com">aeiche.com</a>. If you'd like to follow the fun stuff that I do in my off time, visit <a target="_blank" href="https://aaroneiche.com">AaronEiche.com</a>.</p>
-        </div>        
-        <div>
-            <h2>Q & A</h2>
-            <h3>Shouldn't this look cooler?</h3>
-            <p>Yeah. <a onclick="cooler()">Click here</a> for some coolness.</p>
-        </div>
-            
+        </div>                    
     </div>
     <div class="section">
-        <div class="block">
+        <div class="block" id="first">
             <div class="title">Block Title</div>
-            I am a block
+            <span class="content">I am a block</span>
         </div>
-        <div class="block">
+        <div class="block" id="second">
             <div class="title">Block Title</div>
-            I am a block
+            <span class="content">I am a block</span>
         </div>
-        <div class="block">
+        <div class="block" id="third">
             <div class="title">Block Title</div>
-            I am a block
+            <span class="content">I am a block</span>
         </div>
-        <div class="block">
+        <div class="block" id="forth">
             <div class="title">Block Title</div>            
-            I am a block
+            <span class="content">I am a block</span>
         </div>
     </div>
     <script>
+        
+        document.addEventListener('DOMContentLoaded',e=>{
+            
+            let set = document.querySelectorAll("div.block");
+            
+            set.forEach((val,key)=>{
+                val.addEventListener("click",blockHandler);
+            })
+
+            
+                        
+            
+            console.log(set);
+        });
+
+        function blockHandler(event) {
+            console.log(event.target.id);
+        }
+
     </script>
 </body>
 </html>
