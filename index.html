@@ -41,14 +41,13 @@
             set.forEach((val,key)=>{
                 val.addEventListener("click",blockHandler);
             })
-
-            console.log(set);
         });
 
         function blockHandler(event) {
-            console.log(event.target.id);
-            
 
+            let set = document.querySelectorAll("div.block");
+            
+            document.getElementById(event.target.id).classList.toggle("show");
         }
 
     </script>
