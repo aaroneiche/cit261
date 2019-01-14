@@ -19,6 +19,7 @@
         <div id="add">
             <label for="addInput">Add a Todo</label>
             <input type="text" name="addInput" id="addInput">
+            <button onclick="">Add</button>
         </div>
     </div>
     <script>
@@ -37,8 +38,7 @@
             //Get Todos from localstorage.
             displayItems();
         });
-
-
+        
         function getTodosFromStorage() {
             let todosLS = window.localStorage.getItem("todos");
             return (todosLS !== null) ? JSON.parse(todosLS) : [];
@@ -93,8 +93,28 @@
         }
 
 
-        /* 
-            Fluency: DOM manipulation
+        //Handle done
+        function handleDone(td) {
+            //
+            let thisId = td.getAttribute("data-id")
+
+
+            //Get local storage
+            let todos = getTodosFromStorage();
+
+            //Toggle the todo.
+            todos.forEach(t=>{
+                if(t.id == thisId){
+                    t.done = !t.done;                    
+                }
+            });
+
+            //save to localstorage.
+            window.localStorage.setItem("todos",JSON.stringify(todos));
+
+        }
+
+        /*  Fluency: DOM manipulation
 
             This code shows an example of creating elements and injecting them into 
             the DOM, 
@@ -105,6 +125,11 @@
             var check = document.createElement("input");
             check.setAttribute("type","checkbox");
             check.setAttribute("data-id",todoObject.id);
+
+            //add a handler for the done checkbox.
+            check.addEventListener("change",e=>{ 
+                handleDone(e.target); 
+            });
 
             if(todoObject.done === true) {
                 check.setAttribute("checked",true);
@@ -120,8 +145,7 @@
         }
 
 
-        /* 
-            Fluency: localStorage
+        /*  Fluency: localStorage
 
             This code shows a real-life, working example of localstorage.
             Fetching, parsing, writing, and saving to localstorage of objects.
@@ -129,9 +153,7 @@
 
         function addToStorage(todoObject){
             //Get local storage
-            let todosLS = window.localStorage.getItem("todos");
-            //Make sure it exists.
-            let t = (todosLS !== null) ? JSON.parse(todosLS) : [];
+            let t = getTodosFromStorage();
 
             //Add object
             t.push(todoObject);
