@@ -29,5 +29,32 @@
             </li>
         </ul>
     </div>
+    <script>
+        /* 
+            {
+                done: false,
+                text: "Mow the grass"
+            }
+         */
+        
+
+        function addNewItem(todoObject) {
+            var li = document.createElement("li");
+            var check = document.createElement("input");
+            check.setAttribute("type","checkbox");
+
+            if(todoObject.done === true) {
+                li.classList.add("done");
+                check.setAttribute("checked",true);
+            }
+            var label = document.createElement("label");
+            label.innerHTML = todoObject.text;
+
+            li.appendChild(check);
+            li.appendChild(label);
+            document.querySelector("ul#todos").appendChild(li);
+        }
+
+    </script>
 </body>
 </html>

@@ -33,6 +33,10 @@ ul#todos {
     list-style-type: none;
 }
 
+ul#todos li {
+    margin-top: 10px;
+}
+
 .done input:checked + label {
     text-decoration: line-through;
 }
