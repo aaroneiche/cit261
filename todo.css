@@ -40,6 +40,14 @@ ul#todos li {
     margin-top: 10px;
 }
 
+ul#todos li span.trash { 
+    visibility: hidden;
+}
+
+ul#todos li:hover span.trash { 
+    visibility: visible;
+}
+
 ul#todos li input:checked + label {
     text-decoration: line-through;
 }

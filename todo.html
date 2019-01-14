@@ -126,13 +126,22 @@
             //Create Elements
             var li = document.createElement("li");
             var check = document.createElement("input");
+            let trash = document.createElement("span");
             check.setAttribute("type","checkbox");
             check.setAttribute("data-id",todoObject.id);
 
+            trash.innerHTML = '🗑️';
+            trash.classList.add("trash");
+
             //add a handler for the done checkbox.
             li.addEventListener("click",e=>{ 
-                handleDone(li);
+                handleDone(li.querySelector('input').getAttribute("data-id"));
             });
+
+            trash.addEventListener("click",e=>{
+                removeTodo(li.querySelector('input').getAttribute("data-id"));
+                e.stopPropagation();
+            })
 
             if(todoObject.done === true) {
                 check.setAttribute("checked",true);
@@ -142,8 +151,10 @@
             label.innerHTML = todoObject.text;
 
             //Append Elements to list item.
+            li.appendChild(trash);
             li.appendChild(check);
             li.appendChild(label);
+
             document.querySelector("ul#todos").appendChild(li);
         }
 
@@ -165,6 +176,19 @@
             window.localStorage.setItem("todos",JSON.stringify(t));
         }
 
+        //Handle removing a todo
+        function removeTodo(todoId) {
+            var todos = getTodosFromStorage();
+
+                        //Toggle the todo.
+            todos.forEach(t=>{
+                if(t.id == thisId){
+                    delete todos[t];
+                }
+            });
+
+            window.localStorage.setItem("todos",JSON.stringify(todos));
+        }
 
     </script>
 </body>
