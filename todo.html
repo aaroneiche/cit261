@@ -94,10 +94,12 @@
 
 
         //Handle done
-        function handleDone(td) {
-            //
-            let thisId = td.getAttribute("data-id")
-
+        function handleDone(li) {
+            //Get the checkbox.
+            var td = li.querySelector('input[type="checkbox"]');
+            
+            //get the UUID
+            let thisId = td.getAttribute("data-id");
 
             //Get local storage
             let todos = getTodosFromStorage();
@@ -105,7 +107,8 @@
             //Toggle the todo.
             todos.forEach(t=>{
                 if(t.id == thisId){
-                    t.done = !t.done;                    
+                    t.done = !t.done;
+                    td.checked = !td.checked;
                 }
             });
 
@@ -127,8 +130,8 @@
             check.setAttribute("data-id",todoObject.id);
 
             //add a handler for the done checkbox.
-            check.addEventListener("change",e=>{ 
-                handleDone(e.target); 
+            li.addEventListener("click",e=>{ 
+                handleDone(li);
             });
 
             if(todoObject.done === true) {
