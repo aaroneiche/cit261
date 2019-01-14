@@ -15,28 +15,39 @@
     <div id="todoList">
         <div id="title">Just To Do It!</div>
         <ul id="todos">
-            <li class="done">
-                <input type="checkbox"  /> 
+            <li>
+                <input type="checkbox" /> 
 				<label>Example Item</label>
             </li>
-            <li class="done">
-                <input type="checkbox"  /> 
+            <li>
+                <input type="checkbox" /> 
                 <label>Second Example Item</label>
             </li>
-            <li class="done">
-                <input type="checkbox"  /> 
+            <li>
+                <input type="checkbox" /> 
                 <label>Yet Another Example Item</label>                
             </li>
         </ul>
+        <div id="add">
+            <label for="addInput">Add a Todo</label>
+            <input type="text" name="addInput" id="addInput">
+        </div>
     </div>
     <script>
-        /* 
-            {
-                done: false,
-                text: "Mow the grass"
-            }
-         */
-        
+
+        document.addEventListener('DOMContentLoaded',e=>{
+            document.getElementById("addInput").addEventListener('keypress',ev=>{
+                if(ev.key === "Enter") {
+                    let inputEl = document.getElementById("addInput");
+                    handleAdd(inputEl.value);
+                    inputEl.value = "";
+                }
+            })
+        });
+
+        function handleAdd(t) {
+            addNewItem({done:false,text:t});
+        }
 
         function addNewItem(todoObject) {
             var li = document.createElement("li");
@@ -54,6 +65,18 @@
             li.appendChild(label);
             document.querySelector("ul#todos").appendChild(li);
         }
+
+        function addToStorage(todoObject){
+            //Get local storage
+            window.localStorage.getItem("todos");
+
+            //Parse
+            
+            //Add object
+
+            //Save to local storage.
+        }
+
 
     </script>
 </body>
