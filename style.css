@@ -32,6 +32,9 @@ a:not([href]) {
     width: 0%;
     height: 200px;
 
+    display:flex;
+    flex-direction: column;
+
     margin: 10px;
     padding: 5px;
     border: 2px solid white;
@@ -66,6 +69,25 @@ a:not([href]) {
     padding-top: 3px;
     /* width: 100%; */
     background-color: rgb(53, 53, 53)}
+
+/* The p tag in the block is description */
+
+div.block.ready::after {
+    content: "Ready For Review";
+    background-color: green;
+    display: block;
+    padding: 1px;
+    margin: 0px;
+    align-self: flex-end;
+}
+
+div.block.pending::after {
+    content: "Don't Review Yet.";
+    background-color: red;
+    display: block;
+    padding: 1px;
+    margin: 0px;
+}
 
 
 pre#terminal {
