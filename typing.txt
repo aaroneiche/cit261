@@ -1,0 +1,18 @@
+Initiate System.
+.
+.
+.
+.
+System Starting, stand by please.
+.
+Scanning audience for threat vectors.
+.
+.
+.
+Threat vector detected.
+.
+Threat eliminated.
+.
+.
+Sytem starting.
+
