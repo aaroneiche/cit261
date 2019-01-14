@@ -24,22 +24,64 @@
     <script>
 
         document.addEventListener('DOMContentLoaded',e=>{
+            
+            //Setup key handler for input
             document.getElementById("addInput").addEventListener('keypress',ev=>{
                 if(ev.key === "Enter") {
                     let inputEl = document.getElementById("addInput");
                     handleAdd(inputEl.value);
-                    inputEl.value = "";
+                    inputEl.value = "";                    
                 }
-            })
+            });
+
+            //Get Todos from localstorage.
+            displayItems();
         });
+
+
+        function getTodosFromStorage() {
+            let todosLS = window.localStorage.getItem("todos");
+            return (todosLS !== null) ? JSON.parse(todosLS) : [];
+        }    
+
+        function writeStorage(todoList){ 
+            let tdList = JSON.stringify(todoList);
+            window.localStorage.setItem("todos",tdList);
+        }
+
+        //displays items in the todo list.
+        function displayItems() {
+            //Get local storage
+            let todosLS = window.localStorage.getItem("todos");
+
+            //Make sure it exists.
+            let todoList = (todosLS !== null) ? JSON.parse(todosLS) : [];
+
+            //remove all the items being listed.
+            if(document.querySelector("ul#todos li") != null) {
+                document.querySelector("ul#todos li").remove();
+            }
+            
+            todoList.forEach(todo => {
+                addNewItem(todo);
+            });
+        }
 
         //Handler for adding an item.
         function handleAdd(t) {
+            //Add to storage
+            
+            //fetch storage
+            let storage = getTodosFromStorage();
 
-            let td = {done:false,text:t}
+            //add item to storage
+            storage.push({done:false,text:t});
 
-            addNewItem(td);
-            addToStorage(td);
+            //save storage.
+            writeStorage(storage);
+
+            //call display because there's been a change.
+            displayItems();
         }
 
         /* 
@@ -77,15 +119,15 @@
 
         function addToStorage(todoObject){
             //Get local storage
-            let todosLS = window.localStorage.getItem("todos")
+            let todosLS = window.localStorage.getItem("todos");
             //Make sure it exists.
-            let todos = (todosLS !== null) ? JSON.parse(todosLS) : [];
+            let t = (todosLS !== null) ? JSON.parse(todosLS) : [];
 
             //Add object
-            todos.push(todoObject);
+            t.push(todoObject);
 
             //Save to local storage.
-            window.localStorage.setItem("todos",JSON.stringify(todos));
+            window.localStorage.setItem("todos",JSON.stringify(t));
         }
 
 
