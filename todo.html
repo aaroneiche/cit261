@@ -15,18 +15,6 @@
     <div id="todoList">
         <div id="title">Just To Do It!</div>
         <ul id="todos">
-            <li>
-                <input type="checkbox" /> 
-				<label>Example Item</label>
-            </li>
-            <li>
-                <input type="checkbox" /> 
-                <label>Second Example Item</label>
-            </li>
-            <li>
-                <input type="checkbox" /> 
-                <label>Yet Another Example Item</label>                
-            </li>
         </ul>
         <div id="add">
             <label for="addInput">Add a Todo</label>
@@ -45,36 +33,59 @@
             })
         });
 
+        //Handler for adding an item.
         function handleAdd(t) {
-            addNewItem({done:false,text:t});
+
+            let td = {done:false,text:t}
+
+            addNewItem(td);
+            addToStorage(td);
         }
 
+        /* 
+            Fluency: DOM manipulation
+
+            This code shows an example of creating elements and injecting them into 
+            the DOM, 
+        */
         function addNewItem(todoObject) {
+            //Create Elements
             var li = document.createElement("li");
             var check = document.createElement("input");
             check.setAttribute("type","checkbox");
 
             if(todoObject.done === true) {
-                li.classList.add("done");
                 check.setAttribute("checked",true);
             }
+
             var label = document.createElement("label");
             label.innerHTML = todoObject.text;
 
+            //Append Elements to list item.
             li.appendChild(check);
             li.appendChild(label);
             document.querySelector("ul#todos").appendChild(li);
         }
 
+
+        /* 
+            Fluency: localStorage
+
+            This code shows a real-life, working example of localstorage.
+            Fetching, parsing, writing, and saving to localstorage of objects.
+        */
+
         function addToStorage(todoObject){
             //Get local storage
-            window.localStorage.getItem("todos");
+            let todosLS = window.localStorage.getItem("todos")
+            //Make sure it exists.
+            let todos = (todosLS !== null) ? JSON.parse(todosLS) : [];
 
-            //Parse
-            
             //Add object
+            todos.push(todoObject);
 
             //Save to local storage.
+            window.localStorage.setItem("todos",JSON.stringify(todos));
         }
 
 
