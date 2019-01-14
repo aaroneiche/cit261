@@ -58,12 +58,15 @@
             let todoList = (todosLS !== null) ? JSON.parse(todosLS) : [];
 
             //remove all the items being listed.
-            if(document.querySelector("ul#todos li") != null) {
-                document.querySelector("ul#todos li").remove();
+            if(document.querySelectorAll("ul#todos li").length != null) {
+                document.querySelectorAll("ul#todos li").forEach(t=>{
+                    t.remove();
+                })
             }
             
+            //insert individual todos.
             todoList.forEach(todo => {
-                addNewItem(todo);
+                displayToDo(todo);
             });
         }
 
@@ -74,8 +77,13 @@
             //fetch storage
             let storage = getTodosFromStorage();
 
+
+            //we need a unique ID
+            var uuid = (Math.random() + 1).toString(36).substring(7);
+            var ob = {id:uuid, done:false,text:t}
+
             //add item to storage
-            storage.push({done:false,text:t});
+            storage.push(ob);
 
             //save storage.
             writeStorage(storage);
@@ -84,17 +92,19 @@
             displayItems();
         }
 
+
         /* 
             Fluency: DOM manipulation
 
             This code shows an example of creating elements and injecting them into 
             the DOM, 
         */
-        function addNewItem(todoObject) {
+        function displayToDo(todoObject) {
             //Create Elements
             var li = document.createElement("li");
             var check = document.createElement("input");
             check.setAttribute("type","checkbox");
+            check.setAttribute("data-id",todoObject.id);
 
             if(todoObject.done === true) {
                 check.setAttribute("checked",true);
