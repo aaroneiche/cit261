@@ -40,7 +40,7 @@
         });
         
         function getTodosFromStorage() {
-            let todosLS = window.localStorage.getItem("todos");
+            var todosLS = window.localStorage.getItem("todos");
             return (todosLS !== null) ? JSON.parse(todosLS) : [];
         }    
 
@@ -52,10 +52,7 @@
         //displays items in the todo list.
         function displayItems() {
             //Get local storage
-            let todosLS = window.localStorage.getItem("todos");
-
-            //Make sure it exists.
-            let todoList = (todosLS !== null) ? JSON.parse(todosLS) : [];
+            var todoList = getTodosFromStorage();
 
             //remove all the items being listed.
             if(document.querySelectorAll("ul#todos li").length != null) {
@@ -94,27 +91,19 @@
 
 
         //Handle done
-        function handleDone(li) {
-            //Get the checkbox.
-            var td = li.querySelector('input[type="checkbox"]');
-            
-            //get the UUID
-            let thisId = td.getAttribute("data-id");
-
+        function handleDone(todoId) {
             //Get local storage
             let todos = getTodosFromStorage();
 
-            //Toggle the todo.
-            todos.forEach(t=>{
-                if(t.id == thisId){
+
+            todos.forEach((t,i,todos)=>{
+            if(t.id == todoId){
                     t.done = !t.done;
-                    td.checked = !td.checked;
                 }
             });
-
             //save to localstorage.
             window.localStorage.setItem("todos",JSON.stringify(todos));
-
+            displayItems();
         }
 
         /*  Fluency: DOM manipulation
@@ -158,7 +147,6 @@
             document.querySelector("ul#todos").appendChild(li);
         }
 
-
         /*  Fluency: localStorage
 
             This code shows a real-life, working example of localstorage.
@@ -180,14 +168,15 @@
         function removeTodo(todoId) {
             var todos = getTodosFromStorage();
 
-                        //Toggle the todo.
-            todos.forEach(t=>{
-                if(t.id == thisId){
-                    delete todos[t];
+            //Toggle the todo.
+            todos.forEach((t,i,todos)=>{
+            if(t.id == todoId){
+                    todos.splice(i,1);
                 }
             });
 
             window.localStorage.setItem("todos",JSON.stringify(todos));
+            displayItems();
         }
 
     </script>

@@ -38,6 +38,7 @@ ul#todos {
 
 ul#todos li {
     margin-top: 10px;
+    cursor: pointer;
 }
 
 ul#todos li span.trash { 
