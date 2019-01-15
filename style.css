@@ -72,21 +72,42 @@ a:not([href]) {
 
 /* The p tag in the block is description */
 
+div.block::before {
+    content: attr(data-title);
+    background-color: rgb(53, 53, 53);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    margin-top: -5px;
+    margin-left: -5px;
+    margin-right: -5px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 2px;
+}
+
+div.block .content {
+    padding-top: 5px;
+    flex-grow: 1;
+}
+
+div.block::after {
+    display: block;
+    padding: 3px;
+    margin: -5px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+
 div.block.ready::after {
     content: "Ready For Review";
-    background-color: green;
-    display: block;
-    padding: 1px;
-    margin: 0px;
-    align-self: flex-end;
+    background-color: darkgreen;    
 }
 
 div.block.pending::after {
     content: "Don't Review Yet.";
-    background-color: red;
-    display: block;
-    padding: 1px;
-    margin: 0px;
+    background-color: darkred;
 }
 
 
