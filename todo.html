@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Just To Do it!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="todo.css" />
+    <!-- <script src="main.js"></script> -->
+</head>
+<body>
+    <!-- Goal here is to parse a todo.txt file and create Todo list
+    save to local storage. -->
+    
+    <div id="todoList">
+        <div id="title">Just To Do It!</div>
+        <ul id="todos">
+        </ul>
+        <div id="add">
+            <label for="addInput">Add a Todo</label>
+            <input type="text" name="addInput" id="addInput">
+            <button onclick="">Add</button>
+        </div>
+    </div>
+    <script>
+
+        document.addEventListener('DOMContentLoaded',e=>{
+            
+            //Setup key handler for input
+            document.getElementById("addInput").addEventListener('keypress',ev=>{
+                if(ev.key === "Enter") {
+                    let inputEl = document.getElementById("addInput");
+                    handleAdd(inputEl.value);
+                    inputEl.value = "";                    
+                }
+            });
+
+            //Get Todos from localstorage.
+            displayItems();
+        });
+        
+        function getTodosFromStorage() {
+            var todosLS = window.localStorage.getItem("todos");
+            return (todosLS !== null) ? JSON.parse(todosLS) : [];
+        }    
+
+        function writeStorage(todoList){ 
+            let tdList = JSON.stringify(todoList);
+            window.localStorage.setItem("todos",tdList);
+        }
+
+        //displays items in the todo list.
+        function displayItems() {
+            //Get local storage
+            var todoList = getTodosFromStorage();
+
+            //remove all the items being listed.
+            if(document.querySelectorAll("ul#todos li").length != null) {
+                document.querySelectorAll("ul#todos li").forEach(t=>{
+                    t.remove();
+                })
+            }
+            
+            //insert individual todos.
+            todoList.forEach(todo => {
+                displayToDo(todo);
+            });
+        }
+
+        //Handler for adding an item.
+        function handleAdd(t) {
+            //Add to storage
+            
+            //fetch storage
+            let storage = getTodosFromStorage();
+
+
+            //we need a unique ID
+            var uuid = (Math.random() + 1).toString(36).substring(7);
+            var ob = {id:uuid, done:false,text:t}
+
+            //add item to storage
+            storage.push(ob);
+
+            //save storage.
+            writeStorage(storage);
+
+            //call display because there's been a change.
+            displayItems();
+        }
+
+
+        //Handle done
+        function handleDone(todoId) {
+            //Get local storage
+            let todos = getTodosFromStorage();
+
+
+            todos.forEach((t,i,todos)=>{
+            if(t.id == todoId){
+                    t.done = !t.done;
+                }
+            });
+            //save to localstorage.
+            window.localStorage.setItem("todos",JSON.stringify(todos));
+            displayItems();
+        }
+
+        /*  Fluency: DOM manipulation
+
+            This code shows an example of creating elements and injecting them into 
+            the DOM, 
+        */
+        function displayToDo(todoObject) {
+            //Create Elements
+            var li = document.createElement("li");
+            var check = document.createElement("input");
+            let trash = document.createElement("span");
+            check.setAttribute("type","checkbox");
+            check.setAttribute("data-id",todoObject.id);
+
+            trash.innerHTML = '🗑️';
+            trash.classList.add("trash");
+
+            //add a handler for the done checkbox.
+            li.addEventListener("click",e=>{ 
+                handleDone(li.querySelector('input').getAttribute("data-id"));
+            });
+
+            trash.addEventListener("click",e=>{
+                removeTodo(li.querySelector('input').getAttribute("data-id"));
+                e.stopPropagation();
+            })
+
+            if(todoObject.done === true) {
+                check.setAttribute("checked",true);
+            }
+
+            var label = document.createElement("label");
+            label.innerHTML = todoObject.text;
+
+            //Append Elements to list item.
+            li.appendChild(trash);
+            li.appendChild(check);
+            li.appendChild(label);
+
+            document.querySelector("ul#todos").appendChild(li);
+        }
+
+        /*  Fluency: localStorage
+
+            This code shows a real-life, working example of localstorage.
+            Fetching, parsing, writing, and saving to localstorage of objects.
+        */
+
+        function addToStorage(todoObject){
+            //Get local storage
+            let t = getTodosFromStorage();
+
+            //Add object
+            t.push(todoObject);
+
+            //Save to local storage.
+            window.localStorage.setItem("todos",JSON.stringify(t));
+        }
+
+        //Handle removing a todo
+        function removeTodo(todoId) {
+            var todos = getTodosFromStorage();
+
+            //Toggle the todo.
+            todos.forEach((t,i,todos)=>{
+            if(t.id == todoId){
+                    todos.splice(i,1);
+                }
+            });
+
+            window.localStorage.setItem("todos",JSON.stringify(todos));
+            displayItems();
+        }
+
+    </script>
+</body>
+</html>
