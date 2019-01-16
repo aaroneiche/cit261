@@ -28,6 +28,7 @@
             </div>
     
             <div class="face back">
+                <button onclick="toggleCard(null)">Back to Rovers</button>
                 <div>
                     This is a thing that is a thing.
                 </div>
@@ -47,12 +48,12 @@
             
             rovers.forEach(e=>{
                 e.addEventListener("click",e=>{
-                    showRoverView(e.id);
+                    toggleCard(e.id);
                 });
             })
         });
 
-        function showRoverView(roverId) {
+        function toggleCard(roverId) {
             document.getElementById("card").classList.toggle("flipped");
         }
 
