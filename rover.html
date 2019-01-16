@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="rover.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Rover Photo Explorer</h1>
+
+    <!-- Generic Container -->
+    <div id="container">
+        <div id="card" >
+            <div id="rovers" class="face front">
+                <div class="rover" id="opportunity" data-img="rover/opportunity.jpg">
+                    <div class="title">Opportunity</div>
+                </div>
+            
+                <div class="rover" id="spirit" data-img="rover/spirit.jpg">
+                    <div class="title">Spirit</div>
+                </div>
+        
+                <div class="rover" id="curiosity" data-img="rover/curiosity.jpg">
+                    <div class="title">Curiosity</div>
+                </div>
+            </div>
+    
+            <div class="face back">
+                <div>
+                    This is a thing that is a thing.
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    
+        let data = "";
+
+        //Handle on page load.
+        document.addEventListener('DOMContentLoaded',e=>{
+
+            var rovers = document.querySelectorAll(".rover");
+            
+            rovers.forEach(e=>{
+                e.addEventListener("click",e=>{
+                    showRoverView(e.id);
+                });
+            })
+        });
+
+        function showRoverView(roverId) {
+            document.getElementById("card").classList.toggle("flipped");
+        }
+
+        function getItems() {
+            var url = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY"
+
+            //Create an XMLHttpRequest.
+            var r = new XMLHttpRequest();
+            r.open("GET",url);
+            
+            //ES2015 approach. You could easily do:
+            // r.onload = function (){ ...
+            r.onload = () => {
+                if(r.status == 200) {
+                    data = r.responseText;
+                }else{
+                    //probably an error - possibly a 3xx status code.
+                    alert("Error communicating with NASA");
+                }
+            }
+            r.send();
+        }    
+
+        
+    </script>
+
+</body>
+</html>
