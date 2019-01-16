@@ -15,10 +15,10 @@ a {
 
 /* This makes sure that links without hrefs look/behave 
 the same as links with.*/
-a:not([href]) {
+/* a:not([href]) {
     cursor: pointer;
     text-decoration: underline;
-}
+} */
 
 .section {
     width: 70%;
@@ -31,6 +31,7 @@ a:not([href]) {
     min-width: 200px;
     width: 0%;
     height: 200px;
+    text-decoration: none;
 
     display:flex;
     flex-direction: column;
@@ -44,6 +45,7 @@ a:not([href]) {
     transition-property: box-shadow;
     transition-duration: 300ms;
     box-shadow: 0px 0px #aaa;
+    color: #aaa;
 }
 
 /* The show class expands the size of a given block to showoff. */
@@ -72,7 +74,7 @@ a:not([href]) {
 
 /* The p tag in the block is description */
 
-div.block::before {
+a.block::before {
     content: attr(data-title);
     background-color: rgb(53, 53, 53);
     border-top-left-radius: 8px;
@@ -85,12 +87,12 @@ div.block::before {
     padding-bottom: 2px;
 }
 
-div.block .content {
+a.block .content {
     padding-top: 5px;
     flex-grow: 1;
 }
 
-div.block::after {
+a.block::after {
     display: block;
     padding: 3px;
     margin: -5px;
@@ -100,12 +102,12 @@ div.block::after {
     font-weight: bold;
 }
 
-div.block.ready::after {
+a.block.ready::after {
     content: "Ready For Review";
     background-color: darkgreen;    
 }
 
-div.block.pending::after {
+a.block.pending::after {
     content: "Don't Review Yet.";
     background-color: darkred;
 }
