@@ -23,13 +23,13 @@ the same as links with.*/
 .section {
     width: 70%;
     display: flex;
+    position: relative;
 }
 
 .section .sub {
     position: absolute;
     display: flex;
     flex-wrap: wrap;
-    width: 70%;
 }
 
 .block {
@@ -62,6 +62,21 @@ the same as links with.*/
     transform: scale(0,0);
 }
 
+button#toggleSub {
+    display:inline-block;
+    border: #aaa solid 3px; 
+    border-radius: 10px;
+    padding: 8px;
+    background-color: rgb(53, 53, 53);
+    color: #aaa;
+    outline: none;
+    cursor: pointer;
+}
+
+button#toggleSub:active {
+    background-color: #aaa;
+    color: rgb(53, 53, 53);
+}
 
 
 /* The show class expands the size of a given block to showoff. */
