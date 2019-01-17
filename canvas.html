@@ -10,14 +10,25 @@
 <body>
     <div id="container">
         <canvas id="canvas" class="over" height="352" width="464"></canvas>
-        <video src="modern_times.mp4" class="over"></video>
-        <div>
-            <button onclick="play();">Play</button>
-            <button onclick="pause();">Pause</button>
-        </div>
+        <video id="video" src="modern_times.mp4" class="over"></video>
+
+    </div>
+    <div>
+        <button onclick="play();">Play</button>
+        <button onclick="pause();">Pause</button>
     </div>
     <script>
     
+        /* 
+        Draws a "pop up video" bubble, presumably with some interesting information.
+        */
+        function drawBubble(context, text, x, y){
+            context.beginPath();
+            context.arc(x,y,40, Math.PI, false);
+            context.strokeStyle = "#000";
+            context.stroke();
+        }
+
         function drawTest(){
             var canvas = document.getElementById("canvas");
             var ctx = canvas.getContext("2d");
@@ -34,11 +45,11 @@
         }
     
         function play(){
-
+            document.getElementById("video").play();
         }
         
         function pause(){
-            
+            document.getElementById("video").pause();
         }
     
     </script>
