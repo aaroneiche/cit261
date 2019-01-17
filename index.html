@@ -14,47 +14,65 @@
             <p>This is a page showing work that I've done for school. If you'd like to see some of the work that I've done extra-curricularly (in my 13 years in professional software development) please go to <a target="_blank" href="https://aeiche.com">aeiche.com</a>. If you'd like to follow the fun stuff that I do in my off time, visit <a target="_blank" href="https://aaroneiche.com">AaronEiche.com</a>.</p>
         </div>                    
     </div>
-    <div><button onclick="moveThings()">Move things</button></div>
+    <div><button onclick="toggleSub()">Move things</button></div>
     <div class="section">
-            <a class="block pending" id="todo" href="todo.html" data-title="JavaScript ">
-                <span class="content">A ToDo App </span>
-            </a>
-            <a class="block pending" id="todo" href="todo.html" data-title="JavaScript Objects">
-                <span class="content">content here</span>
-            </a>
-            <a class="block pending" id="todo" href="todo.html" data-title="JSON Parse, Stringify">
-                <span class="content">content here</span>
-            </a>
-            <a class="block pending" id="todo" href="todo.html" data-title="AJAX ">
-                <span class="content">content here</span>
-            </a>
-            <a class="block pending" id="todo" href="todo.html" data-title="Local Storage ">
-                <span class="content">content here</span>
-            </a>
-            <a class="block pending" id="todo" href="todo.html" data-title="DOM Manipulation ">
-                <span class="content">content here</span>
-            </a>
-            <a class="block pending" id="todo" href="todo.html" data-title="CSS Class Properties">
-                <span class="content">content here</span>
-            </a>
-            <a class="block pending" id="todo" href="todo.html" data-title="Javascript CSS3 Transitions and Animations">
-                <span class="content">content here</span>
-            </a>
-            <a class="block pending" id="todo" href="todo.html" data-title="JavaScript Events">
-                <span class="content">content here</span>
-            </a>
-            <a class="block pending" id="todo" href="todo.html" data-title="HTML5 Tags">
-                <span class="content">content here</span>
-            </a>
-            <a class="block pending" id="todo" href="todo.html" data-title="CSS3 Transitions">
-                <span class="content">content here</span>
-            </a>
-            <a class="block pending" id="todo" href="todo.html" data-title="CSS3 Transforms">
-                <span class="content">content here</span>
-            </a>
-            <a class="block pending" id="todo" href="todo.html" data-title="CSS3 Animations">
-                <span class="content">content here</span>
-            </a>
+        <div class="sub" id="apps">
+            <a class="block app shrink" id="todo" href="todo.html" data-title="Todo!">
+                    <span class="content">
+                        A ToDo App built with LocalStorage, and a bit of CSS3
+                    </span>
+                </a>
+                <a class="block app shrink " id="todo" href="rover.html" data-title="Rover Picture Explorer">
+                    <span class="content">A Mars Rover Picture Explorer getting data from the NASA Rover API</span>
+                </a>
+                <a class="block app shrink " id="todo" href="canvas.html" data-title="Popup Video!">
+                    <span class="content">
+                        An exploration of Popup video with HTML5 Video and Canvas.
+                    </span>
+                </a>
+        </div>
+        <div class="sub" id="topics">
+                <a class="block pending" id="todo" href="todo.html" data-title="JavaScript ">
+                        <span class="content">A ToDo App </span>
+                    </a>
+                    <a class="block pending" id="todo" href="todo.html" data-title="JavaScript Objects">
+                        <span class="content">content here</span>
+                    </a>
+                    <a class="block pending" id="todo" href="todo.html" data-title="JSON Parse, Stringify">
+                        <span class="content">content here</span>
+                    </a>
+                    <a class="block pending" id="todo" href="todo.html" data-title="AJAX ">
+                        <span class="content">content here</span>
+                    </a>
+                    <a class="block pending" id="todo" href="todo.html" data-title="Local Storage ">
+                        <span class="content">content here</span>
+                    </a>
+                    <a class="block pending" id="todo" href="todo.html" data-title="DOM Manipulation ">
+                        <span class="content">content here</span>
+                    </a>
+                    <a class="block pending" id="todo" href="todo.html" data-title="CSS Class Properties">
+                        <span class="content">content here</span>
+                    </a>
+                    <a class="block pending" id="todo" href="todo.html" data-title="Javascript CSS3 Transitions and Animations">
+                        <span class="content">content here</span>
+                    </a>
+                    <a class="block pending" id="todo" href="todo.html" data-title="JavaScript Events">
+                        <span class="content">content here</span>
+                    </a>
+                    <a class="block pending" id="todo" href="todo.html" data-title="HTML5 Tags">
+                        <span class="content">content here</span>
+                    </a>
+                    <a class="block pending" id="todo" href="todo.html" data-title="CSS3 Transitions">
+                        <span class="content">content here</span>
+                    </a>
+                    <a class="block pending" id="todo" href="todo.html" data-title="CSS3 Transforms">
+                        <span class="content">content here</span>
+                    </a>
+                    <a class="block pending" id="todo" href="todo.html" data-title="CSS3 Animations">
+                        <span class="content">content here</span>
+                    </a>
+        </div>
+
     </div>
     <script>
         
@@ -73,24 +91,35 @@
             // document.getElementById(event.target.id).classList.toggle("show");
         }
 
-        function moveThings() {
+        function toggleTiles() {
 
             //Get the elements and the document dimenions
             var set = document.querySelectorAll("a.block");
             var doc = document.body.getBoundingClientRect();
 
+            // var l = set[0].getBoundingClientRect().x - doc.x;
+            // var t = set[0].getBoundingClientRect().y - doc.y;
 
-            var l = set[0].getBoundingClientRect().x - doc.x;
-            var t = set[0].getBoundingClientRect().y - doc.y;
-
-            //Determine the angle for a given element from the middle of the document.
+            set.forEach(e=>{
+                e.style.left = -1 * (e.getBoundingClientRect().x + 200) + "px";
+                e.style.top = -1 * (e.getBoundingClientRect().y + 200) + "px";
+            })
+        }
+        
+        function toggleSub() {
+            if(document.getElementById("apps").style.zIndex == 1) {
+                document.getElementById("apps").style.zIndex =  0;
+                document.getElementById("topics").style.zIndex = 1;
+            }else{
+                document.getElementById("apps").style.zIndex =  1;
+                document.getElementById("topics").style.zIndex = 0;
+            }
+            
             
 
-            // document.querySelector("a.block").getBoundingClientRect().x - document.body.getBoundingClientRect().x;
-
-        
-            // set[0].style.top = "-500px";
-            // set[0].style.left = "-500px";
+            document.querySelectorAll("a.block").forEach(e=>{
+                e.classList.toggle("shrink");
+            })
         }
 
     </script>

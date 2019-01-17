@@ -23,7 +23,13 @@ the same as links with.*/
 .section {
     width: 70%;
     display: flex;
+}
+
+.section .sub {
+    position: absolute;
+    display: flex;
     flex-wrap: wrap;
+    width: 70%;
 }
 
 .block {
@@ -49,8 +55,14 @@ the same as links with.*/
     transition-duration: 300ms;
     box-shadow: 0px 0px #aaa;
     color: #aaa;
-    transition: all 1s ease-out;
+    transition: all 0.5s ease-out;
 }
+
+.shrink {
+    transform: scale(0,0);
+}
+
+
 
 /* The show class expands the size of a given block to showoff. */
 .block.show {
@@ -114,6 +126,11 @@ a.block.ready::after {
 a.block.pending::after {
     content: "Don't Review Yet.";
     background-color: darkred;
+}
+
+a.block.app::after {
+    content: "Application";
+    background-color: darkslateblue;
 }
 
 
