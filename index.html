@@ -14,6 +14,7 @@
             <p>This is a page showing work that I've done for school. If you'd like to see some of the work that I've done extra-curricularly (in my 13 years in professional software development) please go to <a target="_blank" href="https://aeiche.com">aeiche.com</a>. If you'd like to follow the fun stuff that I do in my off time, visit <a target="_blank" href="https://aaroneiche.com">AaronEiche.com</a>.</p>
         </div>                    
     </div>
+    <div><button onclick="moveThings()">Move things</button></div>
     <div class="section">
             <a class="block pending" id="todo" href="todo.html" data-title="JavaScript ">
                 <span class="content">A ToDo App </span>
@@ -70,6 +71,26 @@
 
             window.location = event.target.getAttribute("data-url");
             // document.getElementById(event.target.id).classList.toggle("show");
+        }
+
+        function moveThings() {
+
+            //Get the elements and the document dimenions
+            var set = document.querySelectorAll("a.block");
+            var doc = document.body.getBoundingClientRect();
+
+
+            var l = set[0].getBoundingClientRect().x - doc.x;
+            var t = set[0].getBoundingClientRect().y - doc.y;
+
+            //Determine the angle for a given element from the middle of the document.
+            
+
+            // document.querySelector("a.block").getBoundingClientRect().x - document.body.getBoundingClientRect().x;
+
+        
+            // set[0].style.top = "-500px";
+            // set[0].style.left = "-500px";
         }
 
     </script>
