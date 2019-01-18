@@ -16,11 +16,14 @@
     <div>
         <button onclick="play();">Play</button>
         <button onclick="pause();">Pause</button>
+        <button onclick="animate();">Animate</button>
     </div>
     <script>
-    
+        //Each of these should have their own draw methdo to call.
+        var animateObjects = [];
+
         /* 
-        Draws a "pop up video" bubble, presumably with some interesting information.
+        Draws a "pop up video" bubble.
         */
         function drawBubble(x, y, radius, width){
 
@@ -51,12 +54,7 @@
 
             //fill background
             context.fillStyle = "#fff";
-            context.fillRect(
-                x,
-                y - radius + (lineWidth/2),
-                width,
-                (radius * 2) - lineWidth
-            );
+            context.fillRect(x, y - radius + (lineWidth/2), width, (radius * 2) - lineWidth);
 
             //right arc
             context.beginPath();
@@ -66,7 +64,6 @@
             context.strokeStyle = "#000";
             context.lineWidth = lineWidth;
             context.stroke();
-
         }
 
         function drawTest(){
@@ -84,10 +81,36 @@
             ctx.stroke();
         }
     
-        function animateFrame() {
+        //Popup object.
+        function PopUp(text, x, y, radius, width, time) {
+            this.text = text;
+            this.x = x;
+            this.y = y;
+            this.radius = 0;
+            this.width = 0;
+            this.time = 0;
+            this.animate = false; //Whether the popup should be drawn or not.
 
+            this.currentRadius = 0; //initialize to not-visible.
+            this.currentWidth = 0; //Initial the initial width.
+
+            //targetValuses are set at initialization. They are not exposed.
+            let targetWidth = width;
+            let targetRadius = radius;
+            let targetTime = time;
+
+            this.draw = function(){
+                if(this.animate === true) {
+                    if(this.radius < targetRadius) {
+                        this.radius += 2;
+                    }else if(this.width < targetWidth) {
+                        this.width += 6;
+                    }
+                    this.time -= 1; //Decrement time, described in frames.
+                    drawBubble(this.x, this.y, this.radius, this.width);
+                }
+            }
         }
-
 
         function play(){
             document.getElementById("video").play();
@@ -97,6 +120,17 @@
             document.getElementById("video").pause();
         }
     
+        document.addEventListener('DOMContentLoaded',e=>{           
+            animateObjects.push(new PopUp("I am a Moomanbean!", 100, 100, 10, 130, 35));
+        });
+
+        function animate() {
+            animateObjects.forEach(element => {
+                element.draw();
+            });            
+            setTimeout(animate,1000/60);
+        }
+
     </script>
   </body>
 </html>
