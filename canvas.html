@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="canvas.css" />
+    <title>Document</title>
+</head>
+<body>
+    <div id="container">
+        <canvas id="canvas" class="over" height="352" width="464"></canvas>
+        <video id="video" src="modern_times.mp4" class="over"></video>
+
+    </div>
+    <div>
+        <button onclick="play();">Play</button>
+        <button onclick="pause();">Pause</button>
+    </div>
+    <script>
+    
+        /* 
+        Draws a "pop up video" bubble, presumably with some interesting information.
+        */
+        function drawBubble(context, text, x, y){
+            context.beginPath();
+            context.arc(x,y,40, Math.PI, false);
+            context.strokeStyle = "#000";
+            context.stroke();
+        }
+
+        function drawTest(){
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+
+            var radius = 20;
+            ctx.beginPath();
+            ctx.arc(100,60, 30, 2 * Math.PI, false);    
+            
+            ctx.fillStyle = 'green';
+            ctx.fill();
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = '#003300';
+            ctx.stroke();
+        }
+    
+        function play(){
+            document.getElementById("video").play();
+        }
+        
+        function pause(){
+            document.getElementById("video").pause();
+        }
+    
+    </script>
+  </body>
+</html>

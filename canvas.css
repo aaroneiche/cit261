@@ -1,0 +1,15 @@
+
+#container {
+    position: relative;
+    top:20px;
+}
+
+#container .over {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#canvas {
+    z-index: 5;
+}
