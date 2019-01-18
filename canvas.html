@@ -22,9 +22,9 @@
         /* 
         Draws a "pop up video" bubble, presumably with some interesting information.
         */
-        function drawBubble(text, x, y, radius){
+        function drawBubble(x, y, radius, width){
 
-            let radius = 20;
+            // let radius = 20;
             let lineWidth = 2;
 
             //left Arc
@@ -37,26 +37,30 @@
             context.lineWidth = lineWidth;
             context.stroke();
 
-            length = 200;
             //top line
             context.beginPath();
             context.moveTo(x,y - radius);
-            context.lineTo(x + length,y - radius);
+            context.lineTo(x + width,y - radius);
             context.stroke();
 
             //bottom line
             context.beginPath();
             context.moveTo(x,y + radius);
-            context.lineTo(x + length,y + radius);
+            context.lineTo(x + width,y + radius);
             context.stroke();
 
             //fill background
-            context.fillRect(x, y - radius + (lineWidth/2), x + (length - radius), (radius * 2) - lineWidth);
-
+            context.fillStyle = "#fff";
+            context.fillRect(
+                x,
+                y - radius + (lineWidth/2),
+                width,
+                (radius * 2) - lineWidth
+            );
 
             //right arc
             context.beginPath();
-            context.arc(x + length,y,radius, 1.5 * Math.PI, 0.5 * Math.PI);
+            context.arc(x + width,y,radius, 1.5 * Math.PI, 0.5 * Math.PI);
             context.fillStyle = "#fff";
             context.fill();
             context.strokeStyle = "#000";
@@ -81,7 +85,7 @@
         }
     
         function animateFrame() {
-            
+
         }
 
 
