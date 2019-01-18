@@ -122,6 +122,8 @@
     
         document.addEventListener('DOMContentLoaded',e=>{           
             animateObjects.push(new PopUp("I am a Moomanbean!", 100, 100, 10, 130, 35));
+            animateObjects[0].animate = true;
+            animate(); // start the animation right away.
         });
 
         function animate() {
