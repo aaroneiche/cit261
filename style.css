@@ -30,6 +30,7 @@ the same as links with.*/
     position: absolute;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .block {
