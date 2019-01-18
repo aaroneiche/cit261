@@ -9,7 +9,7 @@
 </head>
 <body>
     <div id="container">
-        <canvas id="canvas" class="over" height="352" width="464"></canvas>
+        <canvas id="canvas" class="over"></canvas>
         <video id="video" src="modern_times.mp4" class="over"></video>
 
     </div>
@@ -22,11 +22,47 @@
         /* 
         Draws a "pop up video" bubble, presumably with some interesting information.
         */
-        function drawBubble(context, text, x, y){
+        function drawBubble(text, x, y, radius){
+
+            let radius = 20;
+            let lineWidth = 2;
+
+            //left Arc
+            let context = canvas.getContext("2d");
             context.beginPath();
-            context.arc(x,y,40, Math.PI, false);
+            context.arc(x,y,radius, 0.5 * Math.PI, 1.5 * Math.PI);
+            context.fillStyle = "#fff";
+            context.fill();
             context.strokeStyle = "#000";
+            context.lineWidth = lineWidth;
             context.stroke();
+
+            length = 200;
+            //top line
+            context.beginPath();
+            context.moveTo(x,y - radius);
+            context.lineTo(x + length,y - radius);
+            context.stroke();
+
+            //bottom line
+            context.beginPath();
+            context.moveTo(x,y + radius);
+            context.lineTo(x + length,y + radius);
+            context.stroke();
+
+            //fill background
+            context.fillRect(x, y - radius + (lineWidth/2), x + (length - radius), (radius * 2) - lineWidth);
+
+
+            //right arc
+            context.beginPath();
+            context.arc(x + length,y,radius, 1.5 * Math.PI, 0.5 * Math.PI);
+            context.fillStyle = "#fff";
+            context.fill();
+            context.strokeStyle = "#000";
+            context.lineWidth = lineWidth;
+            context.stroke();
+
         }
 
         function drawTest(){
@@ -44,6 +80,11 @@
             ctx.stroke();
         }
     
+        function animateFrame() {
+            
+        }
+
+
         function play(){
             document.getElementById("video").play();
         }
