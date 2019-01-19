@@ -27,18 +27,38 @@
                     <div class="title">Curiosity</div>
                 </div>
             </div>
-            <div class="face back" id="rover_details">
-                <div style="width: 600px;">
-                    <div class="title"></div>
-                    <button onclick="toggleCard()">Back to Rovers</button>
+            <div id="rover_details" class="face back">
+                <div class="title"></div>
+                <div id="layout">
+                    <div id="rover_info">
+                        <table>
+                            <tr><th>Launch Date</th>    <td id="launch_date"></td></tr>
+
+                            <tr><th>Land Date</th>  <td id="land_date"></td></tr>
+                            <tr><th>Status</th><td id="status"></td></tr>
+                            <tr><th>Total Photos</th><td id="total_photos"></td>
+                            </tr>
+                            <tr><th>Cameras</th><td id="camera_list"></td></tr>
+
+                                
+                                
+                                
+                                
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="rover_pic">
+                        
+                    </div>
                 </div>
+                <button onclick="toggleCard()">Back to Rovers</button>
             </div>
         </div>
     </div>
     
     <script>
     
-        let data = "";
+        var data = {};
         let rover = "curiosity"; //Set a default
 
         //Handle on page load.
@@ -49,7 +69,7 @@
             rovers.forEach(e=>{
                 e.addEventListener("click",r=>{
                     toggleCard();
-                    displayRoverDetails(r.target);
+                    getRoverDetails(r.target.id);
                 });
             })
         });
@@ -58,14 +78,22 @@
             document.getElementById("card").classList.toggle("flipped");
         }
 
-        function displayRoverDetails(rover) {
-            document.querySelector("#rover_details .title").innerHTML = rover.id
-            getItems(rover.id); //Get the camera data for this rover.
+        function displayRoverDetails() {
+
+            rover = data.photos[0].rover
+
+            document.querySelector("#rover_details .title").innerHTML = rover.name;
+            
+            document.querySelector("td#launch_date").innerHTML = rover.launch_date;
+            document.querySelector("td#land_date").innerHTML = rover.landing_date;
+            document.querySelector("td#status").innerHTML = rover.status;
+            document.querySelector("td#total_photos").innerHTML = rover.total_photos;
+            // document.querySelector("td#camera_list").innerHTML = rover;
 
         }
 
 
-        function getItems(rover) {
+        function getRoverDetails(rover) {
             var url = "https://api.nasa.gov/mars-photos/api/v1/rovers/" + rover + "/photos?sol=1000&api_key=DEMO_KEY";
 
             //Create an XMLHttpRequest.
@@ -76,8 +104,10 @@
             // r.onload = function (){ ...
             r.onload = () => {
                 if(r.status == 200) {
-                    // data = r.responseText;
                     data = JSON.parse(r.responseText);
+                    // return new Promise().resolve(r.responseText);
+                    displayRoverDetails();
+
                 }else{
                     //probably an error - possibly a 3xx status code.
                     alert("Error communicating with NASA");
@@ -85,8 +115,6 @@
             }
             r.send();
         }    
-
-        
     </script>
 
 </body>

@@ -9,7 +9,7 @@ body {
 #container {
     perspective: 900px;
     /* flex: 1 0 100%; */
-    width: 60%;
+    width: 625px;
 }
 
 
@@ -40,15 +40,16 @@ body {
 
 #rover_details {
     display: flex;
-    align-items: center;  
-    width: 
+    flex-direction: column;
+    width: 100%;
+
 }
 
 #rovers {
     display: flex;
-    align-items: center;
-    margin-top: 8px;
-    margin-left: 6px;
+    justify-content: center;
+    margin-top: 6px;
+    width: 100%;   
 }
 
 .rover {
@@ -64,14 +65,6 @@ body {
     background-size: cover;
 } 
 
-@media only screen and (max-width: 600px) {
-    #container {
-        width: 90%;
-    }
-  }
-
-
-
 .rover#spirit { background-image: url("rover/spirit.jpg");}
 .rover#opportunity {background-image: url("rover/opportunity.jpg")}
 .rover#curiosity {background-image: url("rover/curiosity.jpg")}
@@ -79,8 +72,23 @@ body {
 div.title {
     display: flex;
     flex-grow: 1;
+    width: 100%;
+    justify-content: center;
+    text-transform: capitalize;
     background-color: rgba(53,53,53,0.7);
     color: white;
-    justify-content: center;
     font-size: 20pt;
+    height: 40px;
 }
+
+#rover_details #layout{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+}
+
+#rover_details #layout div {
+    width: 45%;
+}
+
