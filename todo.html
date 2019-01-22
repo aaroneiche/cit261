@@ -35,10 +35,39 @@
                 }
             });
 
+            //Set some initial items if user's never been here before.
+            if(window.localStorage.getItem("visited") === null){
+
+                let initial = [
+                    {
+                        id: generateUUID(),
+                        done: true,
+                        text: "Go to store"
+                    },
+                    {
+                        id: generateUUID(),
+                        done: false,
+                        text: "Add item to todo list"
+                    },
+                    {
+                        id: generateUUID(),
+                        done: false,
+                        text: "Review Code of this project."
+                    }
+                ]
+
+                writeStorage(initial);
+                window.localStorage.setItem("visited","true");
+            }
+
             //Get Todos from localstorage.
             displayItems();
         });
         
+        function generateUUID() {
+            return (Math.random() + 1).toString(36).substring(7);
+        }
+
         function getTodosFromStorage() {
             var todosLS = window.localStorage.getItem("todos");
             return (todosLS !== null) ? JSON.parse(todosLS) : [];
@@ -55,7 +84,7 @@
             var todoList = getTodosFromStorage();
 
             //remove all the items being listed.
-            if(document.querySelectorAll("ul#todos li").length != null) {
+            if(document.querySelectorAll("ul#todos li").length) {
                 document.querySelectorAll("ul#todos li").forEach(t=>{
                     t.remove();
                 })
@@ -76,7 +105,7 @@
 
 
             //we need a unique ID
-            var uuid = (Math.random() + 1).toString(36).substring(7);
+            var uuid = generateUUID();
             var ob = {id:uuid, done:false,text:t}
 
             //add item to storage
