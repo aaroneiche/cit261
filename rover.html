@@ -12,19 +12,28 @@
 
     <!-- Generic Container -->
     <div id="container">
-        <div id="card" class="flipped">
+        <div id="card" class="">
             <div id="rovers" class="face front">
                 <!-- <button onclick="toggleCard(null)">Go to Rover</button> -->
                 <div class="rover" id="opportunity" data-img="rover/opportunity.jpg">
                     <div class="title">Opportunity</div>
+                    <div class="loader">
+                        <img src="marsspinning.gif" alt="" height=30 width=30>
+                    </div>
                 </div>
             
                 <div class="rover" id="spirit" data-img="rover/spirit.jpg">
                     <div class="title">Spirit</div>
+                    <div class="loader">
+                            <img src="marsspinning.gif" alt="" height=30 width=30>
+                    </div>                    
                 </div>
         
                 <div class="rover" id="curiosity" data-img="rover/curiosity.jpg">
                     <div class="title">Curiosity</div>
+                    <div class="loader">
+                            <img src="marsspinning.gif" alt="" height=30 width=30>
+                    </div>                    
                 </div>
             </div>
             <div id="rover_details" class="face back">
@@ -33,18 +42,10 @@
                     <div id="rover_info">
                         <table>
                             <tr><th>Launch Date</th>    <td id="launch_date"></td></tr>
-
                             <tr><th>Land Date</th>  <td id="land_date"></td></tr>
                             <tr><th>Status</th><td id="status"></td></tr>
-                            <tr><th>Total Photos</th><td id="total_photos"></td>
-                            </tr>
+                            <tr><th>Total Photos</th><td id="total_photos"></td></tr>
                             <tr><th>Cameras</th><td id="camera_list"></td></tr>
-
-                                
-                                
-                                
-                                
-                            </tr>
                         </table>
                     </div>
                     <div id="rover_pic">
@@ -68,7 +69,7 @@
             
             rovers.forEach(e=>{
                 e.addEventListener("click",r=>{
-                    toggleCard();
+                    // toggleCard();
                     getRoverDetails(r.target.id);
                 });
             })
@@ -88,6 +89,9 @@
             document.querySelector("td#land_date").innerHTML = rover.landing_date;
             document.querySelector("td#status").innerHTML = rover.status;
             document.querySelector("td#total_photos").innerHTML = rover.total_photos;
+
+            rover.cameras.forEach()
+
             // document.querySelector("td#camera_list").innerHTML = rover;
 
         }
@@ -100,6 +104,9 @@
             var r = new XMLHttpRequest();
             r.open("GET",url);
             
+            //Set a loading spinner.
+
+
             //ES2015 approach. You could easily do:
             // r.onload = function (){ ...
             r.onload = () => {
@@ -107,7 +114,7 @@
                     data = JSON.parse(r.responseText);
                     // return new Promise().resolve(r.responseText);
                     displayRoverDetails();
-
+                    toggleCard();
                 }else{
                     //probably an error - possibly a 3xx status code.
                     alert("Error communicating with NASA");
