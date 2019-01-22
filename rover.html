@@ -45,7 +45,10 @@
                             <tr><th>Land Date</th>  <td id="land_date"></td></tr>
                             <tr><th>Status</th><td id="status"></td></tr>
                             <tr><th>Total Photos</th><td id="total_photos"></td></tr>
-                            <tr><th>Cameras</th><td id="camera_list"></td></tr>
+                            <tr><th colspan="2">Cameras</th></tr>
+                            <tr>
+                                <td id="camera_list" colspan="2"></td>
+                            </tr>
                         </table>
                     </div>
                     <div id="rover_pic">
@@ -81,7 +84,7 @@
 
         function displayRoverDetails() {
 
-            rover = data.photos[0].rover
+            rover = data.photos[0].rover;
 
             document.querySelector("#rover_details .title").innerHTML = rover.name;
             
@@ -90,10 +93,16 @@
             document.querySelector("td#status").innerHTML = rover.status;
             document.querySelector("td#total_photos").innerHTML = rover.total_photos;
 
-            rover.cameras.forEach()
+            //Clear the camera list.
+            document.querySelector("td#camera_list").innerHTML = "";
+            rover.cameras.forEach(c=>{
+                let cam = document.createElement("li");
+                cam.setAttribute("data-cam",c.name);
+                cam.innerHTML = c.full_name;
+                document.querySelector("td#camera_list").appendChild(cam);
 
-            // document.querySelector("td#camera_list").innerHTML = rover;
-
+                //data.photos.filter(p=>{return p.camera.name == "NAVCAM";});
+            })
         }
 
 
@@ -105,7 +114,7 @@
             r.open("GET",url);
             
             //Set a loading spinner.
-
+            document.querySelector(".rover#" + rover + " div.loader").classList.add("show");
 
             //ES2015 approach. You could easily do:
             // r.onload = function (){ ...
@@ -115,6 +124,7 @@
                     // return new Promise().resolve(r.responseText);
                     displayRoverDetails();
                     toggleCard();
+                    document.querySelector(".rover div.loader").classList.remove("show");
                 }else{
                     //probably an error - possibly a 3xx status code.
                     alert("Error communicating with NASA");
