@@ -11,7 +11,6 @@
     <div id="controls">
         <button onclick="play();">Play</button>
         <button onclick="pause();">Pause</button>
-        <button onclick="animate();">Animate</button>
         <button onclick="toggleTimestamp()">Timestamp</button>
     </div>
     <div id="container">
@@ -91,7 +90,7 @@
         }
     
         //Popup object.
-        function PopUp(text, x, y, radius, width, startTime, endTime, context) {
+        function PopUp(text, x, y, startTime, endTime, context) {
             this.text = text
             this.x = x;
             this.y = y;
@@ -104,7 +103,12 @@
             this.currentRadius = 0; //initialize to not-visible.
             this.currentWidth = 0; //Initial the initial width.
 
-            //targetValuses are set at initialization. They are not exposed.
+            //Previously these were arguments. They should be calculated instead.
+            let radius = 10;
+            // let width = 4.6 * text.length; //Calculated by emperical testing.
+            let width = 5.5 * text.length; //Calculated by emperical testing.
+
+            //target values are set at initialization. They are not exposed.
             let targetWidth = width;
             let targetRadius = radius;
 
@@ -127,7 +131,7 @@
                     
                     context.rect(this.x,this.y - this.radius, this.width, radius * 2);
                     context.clip();
-                    context.font = "10px Arial";
+                    context.font = "12px Arial";
                     context.fillStyle = "#000";
                     context.fillText(this.text, this.x, this.y + 4);
                     context.restore();
@@ -148,17 +152,19 @@
             this.currentTime = 0;
             this.draw = ()=> {              
                 this.currentTime = document.querySelector("#video").currentTime;
-                context.font = "15px Arial";
+                context.font = "20px Arial";
                 context.fillStyle = "#000"
                 // context.
 
-                context.fillText(this.currentTime, 220, 20);
+                context.fillText(this.currentTime, 300, 20);
             }
         }
 
         document.addEventListener('DOMContentLoaded',e=>{
             //Add initial animation items
-            animateObjects.push(new PopUp("I am a Moomanbean!", 100, 100, 10, 130, 0.5, 10.0, ctx));
+            animateObjects.push(new PopUp("Modern times was released in February, 1936 by United Artists", 100, 100, 0.5, 4.0, ctx));
+            animateObjects.push(new PopUp("Chaplin originally planned for it to be his first 'talkie'", 160, 320, 5.7, 9.5, ctx));
+            animateObjects.push(new PopUp("After experimenting, he decided the appeal of 'the little tramp' would be lost if he ever spoke.", 10, 20, 15, 20, ctx));
             animateObjects.push(timestamp);
 
             animate(); // start the animation right away.
