@@ -14,27 +14,13 @@
     <div id="container">
         <div id="card" class="">
             <div id="rovers" class="face front">
+                <div class="loader">
+                    <img src="marsspinning.gif" alt="" height=30 width=30>
+                </div>                    
                 <!-- <button onclick="toggleCard(null)">Go to Rover</button> -->
-                <div class="rover" id="opportunity" data-img="rover/opportunity.jpg">
-                    <div class="title">Opportunity</div>
-                    <div class="loader">
-                        <img src="marsspinning.gif" alt="" height=30 width=30>
-                    </div>
-                </div>
-            
-                <div class="rover" id="spirit" data-img="rover/spirit.jpg">
-                    <div class="title">Spirit</div>
-                    <div class="loader">
-                            <img src="marsspinning.gif" alt="" height=30 width=30>
-                    </div>                    
-                </div>
-        
-                <div class="rover" id="curiosity" data-img="rover/curiosity.jpg">
-                    <div class="title">Curiosity</div>
-                    <div class="loader">
-                            <img src="marsspinning.gif" alt="" height=30 width=30>
-                    </div>                    
-                </div>
+                <div class="rover" id="opportunity" data-img="rover/opportunity.jpg"></div>
+                <div class="rover" id="spirit" data-img="rover/spirit.jpg"></div>        
+                <div class="rover" id="curiosity" data-img="rover/curiosity.jpg"></div>
             </div>
             <div id="rover_details" class="face back">
                 <div class="title"></div>
@@ -42,7 +28,7 @@
                     <div id="rover_info">
                         <table>
                             <tr><th>Launch Date</th>    <td id="launch_date"></td></tr>
-                            <tr><th>Land Date</th>  <td id="land_date"></td></tr>
+                            <tr><th>Landing Date</th>  <td id="land_date"></td></tr>
                             <tr><th>Status</th><td id="status"></td></tr>
                             <tr><th>Total Photos</th><td id="total_photos"></td></tr>
                             <tr><th colspan="2">Cameras</th></tr>
@@ -52,7 +38,11 @@
                         </table>
                     </div>
                     <div id="rover_pic">
-                        
+                        <select name="pictures" id="pictures" multiple>
+                            <option value="">first</option>
+                            <option value="">second</option>
+                            <option value="">third</option>
+                        </select>
                     </div>
                 </div>
                 <button onclick="toggleCard()">Back to Rovers</button>
@@ -99,6 +89,12 @@
                 let cam = document.createElement("li");
                 cam.setAttribute("data-cam",c.name);
                 cam.innerHTML = c.full_name;
+                
+                cam.addEventListener("click", ev => {
+                    console.log(ev);    
+                    ev.stopPropagation();
+                })
+
                 document.querySelector("td#camera_list").appendChild(cam);
 
                 //data.photos.filter(p=>{return p.camera.name == "NAVCAM";});
@@ -114,7 +110,9 @@
             r.open("GET",url);
             
             //Set a loading spinner.
-            document.querySelector(".rover#" + rover + " div.loader").classList.add("show");
+
+            document.querySelector(".loader").style.left = document.querySelector("#" + rover).offsetLeft + "px";
+            document.querySelector(".loader").style.visibility = "visible";
 
             //ES2015 approach. You could easily do:
             // r.onload = function (){ ...
@@ -124,7 +122,8 @@
                     // return new Promise().resolve(r.responseText);
                     displayRoverDetails();
                     toggleCard();
-                    document.querySelector(".rover div.loader").classList.remove("show");
+                    // document.querySelector(".rover div.loader").classList.remove("show");
+                    document.querySelector(".loader").style.visibility = "hidden";
                 }else{
                     //probably an error - possibly a 3xx status code.
                     alert("Error communicating with NASA");
@@ -132,6 +131,16 @@
             }
             r.send();
         }    
+    
+        function listImages(camera) {
+            let photoSet = data.photos.filter(p=>{
+                return p.camera.name == camera;
+            });
+
+            console.log(photoSet);
+
+        }
+    
     </script>
 
 </body>
