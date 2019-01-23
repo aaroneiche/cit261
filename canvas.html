@@ -17,15 +17,24 @@
         <button onclick="play();">Play</button>
         <button onclick="pause();">Pause</button>
         <button onclick="animate();">Animate</button>
+        <button onclick="toggleTimestamp()">Timestamp</button>
     </div>
     <script>
+
+        //Global definitions
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+
         //Each of these should have their own draw methdo to call.
         var animateObjects = [];
+
+        var timestamp = new Timestamp(ctx);
+        timestamp.animate = true;
 
         /* 
         Draws a "pop up video" bubble.
         */
-        function drawBubble(x, y, radius, width){
+        function drawBubble(context, x, y, radius, width){
 
             // let radius = 20;
             let lineWidth = 2;
@@ -82,13 +91,13 @@
         }
     
         //Popup object.
-        function PopUp(text, x, y, radius, width, time) {
-            this.text = text;
+        function PopUp(text, x, y, radius, width, startTime, endTime, context) {
+            this.text = text
             this.x = x;
             this.y = y;
             this.radius = 0;
             this.width = 0;
-            this.time = 0;
+            this.startTime = startTime;
             this.animate = false; //Whether the popup should be drawn or not.
 
             this.currentRadius = 0; //initialize to not-visible.
@@ -97,7 +106,6 @@
             //targetValuses are set at initialization. They are not exposed.
             let targetWidth = width;
             let targetRadius = radius;
-            let targetTime = time;
 
             this.draw = function(){
                 if(this.animate === true) {
@@ -107,7 +115,7 @@
                         this.width += 6;
                     }
                     this.time -= 1; //Decrement time, described in frames.
-                    drawBubble(this.x, this.y, this.radius, this.width);
+                    drawBubble(context, this.x, this.y, this.radius, this.width);
                 }
             }
         }
@@ -120,17 +128,39 @@
             document.getElementById("video").pause();
         }
     
+        function Timestamp(context) {
+            this.animate = true;
+            this.draw = ()=> {
+                let t = document.querySelector("#video").currentTime;
+                
+                context.font = "15px Arial";
+                context.fillText(t, 220, 20);
+            }
+        }
+
         document.addEventListener('DOMContentLoaded',e=>{           
-            animateObjects.push(new PopUp("I am a Moomanbean!", 100, 100, 10, 130, 35));
-            animateObjects[0].animate = true;
+            //Add initial animation items
+            animateObjects.push(new PopUp("I am a Moomanbean!", 100, 100, 10, 130, 5.0, 10.0));
+            animateObjects.push(timestamp);
+
+
             animate(); // start the animation right away.
         });
 
         function animate() {
+            //Clear the canvas before each frame.
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+
             animateObjects.forEach(element => {
-                element.draw();
+                if(element.animate == true){
+                    element.draw();
+                }
             });            
             setTimeout(animate,1000/60);
+        }
+
+        function toggleTimestamp() {
+            timestamp.animate = !timestamp.animate;
         }
 
     </script>
