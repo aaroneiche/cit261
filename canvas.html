@@ -106,7 +106,7 @@
             //Previously these were arguments. They should be calculated instead.
             let radius = 10;
             // let width = 4.6 * text.length; //Calculated by emperical testing.
-            let width = 5.5 * text.length; //Calculated by emperical testing.
+            let width = 6.35 * text.length; //Calculated by emperical testing.
 
             //target values are set at initialization. They are not exposed.
             let targetWidth = width;
@@ -118,7 +118,7 @@
                     if(this.radius < targetRadius) {
                         this.radius += 2;
                     }else if(this.width < targetWidth) {
-                        this.width += 6;
+                        this.width += 15;
                     }
                     this.time -= 1; //Decrement time, described in frames.
                     drawBubble(context, this.x, this.y, this.radius, this.width);
@@ -131,7 +131,7 @@
                     
                     context.rect(this.x,this.y - this.radius, this.width, radius * 2);
                     context.clip();
-                    context.font = "12px Arial";
+                    context.font = "14px Arial";
                     context.fillStyle = "#000";
                     context.fillText(this.text, this.x, this.y + 4);
                     context.restore();
@@ -164,7 +164,7 @@
             //Add initial animation items
             animateObjects.push(new PopUp("Modern times was released in February, 1936 by United Artists", 100, 100, 0.5, 4.0, ctx));
             animateObjects.push(new PopUp("Chaplin originally planned for it to be his first 'talkie'", 160, 320, 5.7, 9.5, ctx));
-            animateObjects.push(new PopUp("After experimenting, he decided the appeal of 'the little tramp' would be lost if he ever spoke.", 10, 20, 15, 20, ctx));
+            animateObjects.push(new PopUp("After experimenting, he decided the appeal of 'the little tramp' would be lost if he ever spoke.", 10, 20, 12, 16, ctx));
             animateObjects.push(timestamp);
 
             animate(); // start the animation right away.
