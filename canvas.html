@@ -16,6 +16,10 @@
     <div id="container">
         <canvas id="canvas" class="over"></canvas>
         <video id="video" src="modern_times.mp4" class="over"></video>
+        <audio id="audio">
+            <source src="pop.wav" type="audio/wav">
+            Your browser does not support the audio tag.
+        </audio>
     </div>
 
     <script>
@@ -23,6 +27,7 @@
         //Global definitions
         var video = document.getElementById("video");
         var canvas = document.getElementById("canvas");
+        var audio = document.getElementById("audio");
         var ctx = canvas.getContext("2d");
 
         //Each of these should have their own draw methdo to call.
@@ -99,6 +104,7 @@
             this.startTime = startTime;
             this.endTime = endTime;
             this.animate = true; //Whether the popup should be drawn or not.
+            this.audioPlayed = false;
 
             this.currentRadius = 0; //initialize to not-visible.
             this.currentWidth = 0; //Initial the initial width.
@@ -113,6 +119,11 @@
             let targetRadius = radius;
 
             this.draw = function(){
+                
+                if(this.audioPlayed === false && timestamp.currentTime > this.startTime) {
+                    audio.play();
+                    this.audioPlayed = true;
+                }
 
                 if(timestamp.currentTime > this.startTime && timestamp.currentTime < this.endTime) {
                     if(this.radius < targetRadius) {
@@ -175,7 +186,7 @@
             //Sets the canvas size relative to the device it's on. Fixes resolution issues.
             canvas.width = video.getBoundingClientRect().width;
             canvas.height = video.getBoundingClientRect().height;
-        })
+        });
 
         function animate() {
             //Clear the canvas before each frame.
