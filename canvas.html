@@ -8,16 +8,17 @@
     <title>Document</title>
 </head>
 <body>
-    <div id="container">
-        <canvas id="canvas" class="over"></canvas>
-        <video id="video" src="modern_times.mp4" class="over"></video>
-    </div>
-    <div>
+    <div id="controls">
         <button onclick="play();">Play</button>
         <button onclick="pause();">Pause</button>
         <button onclick="animate();">Animate</button>
         <button onclick="toggleTimestamp()">Timestamp</button>
     </div>
+    <div id="container">
+        <canvas id="canvas" class="over"></canvas>
+        <video id="video" src="modern_times.mp4" class="over"></video>
+    </div>
+
     <script>
 
         //Global definitions
@@ -152,12 +153,16 @@
             animateObjects.push(new PopUp("I am a Moomanbean!", 100, 100, 10, 130, 2.0, 10.0, ctx));
             animateObjects.push(timestamp);
 
+            animate(); // start the animation right away.
+        });
+
+        // after the video's loaded, set the canvas size.
+        document.getElementById("video").addEventListener('loadeddata',e=>{
             //Sets the canvas size relative to the device it's on. Fixes resolution issues.
             canvas.width = video.getBoundingClientRect().width;
             canvas.height = video.getBoundingClientRect().height;
+        })
 
-            animate(); // start the animation right away.
-        });
 
         function animate() {
             //Clear the canvas before each frame.
