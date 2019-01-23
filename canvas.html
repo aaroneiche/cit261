@@ -11,7 +11,6 @@
     <div id="container">
         <canvas id="canvas" class="over"></canvas>
         <video id="video" src="modern_times.mp4" class="over"></video>
-
     </div>
     <div>
         <button onclick="play();">Play</button>
@@ -22,6 +21,7 @@
     <script>
 
         //Global definitions
+        var video = document.getElementById("video");
         var canvas = document.getElementById("canvas");
         var ctx = canvas.getContext("2d");
 
@@ -40,7 +40,6 @@
             let lineWidth = 2;
 
             //left Arc
-            let context = canvas.getContext("2d");
             context.beginPath();
             context.arc(x,y,radius, 0.5 * Math.PI, 1.5 * Math.PI);
             context.fillStyle = "#fff";
@@ -98,7 +97,8 @@
             this.radius = 0;
             this.width = 0;
             this.startTime = startTime;
-            this.animate = false; //Whether the popup should be drawn or not.
+            this.endTime = endTime;
+            this.animate = true; //Whether the popup should be drawn or not.
 
             this.currentRadius = 0; //initialize to not-visible.
             this.currentWidth = 0; //Initial the initial width.
@@ -108,7 +108,8 @@
             let targetRadius = radius;
 
             this.draw = function(){
-                if(this.animate === true) {
+
+                if(timestamp.currentTime > this.startTime && timestamp.currentTime < this.endTime) {
                     if(this.radius < targetRadius) {
                         this.radius += 2;
                     }else if(this.width < targetWidth) {
@@ -116,6 +117,11 @@
                     }
                     this.time -= 1; //Decrement time, described in frames.
                     drawBubble(context, this.x, this.y, this.radius, this.width);
+
+                    context.beginPath();
+                    context.font = "10px Arial";
+                    context.fillStyle = "#000";
+                    context.fillText(this.currentTime, this.x , this.y);
                 }
             }
         }
@@ -130,19 +136,25 @@
     
         function Timestamp(context) {
             this.animate = true;
-            this.draw = ()=> {
-                let t = document.querySelector("#video").currentTime;
-                
+            this.currentTime = 0;
+            this.draw = ()=> {              
+                this.currentTime = document.querySelector("#video").currentTime;
                 context.font = "15px Arial";
-                context.fillText(t, 220, 20);
+                context.fillStyle = "#000"
+                // context.
+
+                context.fillText(this.currentTime, 220, 20);
             }
         }
 
-        document.addEventListener('DOMContentLoaded',e=>{           
+        document.addEventListener('DOMContentLoaded',e=>{
             //Add initial animation items
-            animateObjects.push(new PopUp("I am a Moomanbean!", 100, 100, 10, 130, 5.0, 10.0));
+            animateObjects.push(new PopUp("I am a Moomanbean!", 100, 100, 10, 130, 2.0, 10.0, ctx));
             animateObjects.push(timestamp);
 
+            //Sets the canvas size relative to the device it's on. Fixes resolution issues.
+            canvas.width = video.getBoundingClientRect().width;
+            canvas.height = video.getBoundingClientRect().height;
 
             animate(); // start the animation right away.
         });
@@ -155,7 +167,7 @@
                 if(element.animate == true){
                     element.draw();
                 }
-            });            
+            });
             setTimeout(animate,1000/60);
         }
 
