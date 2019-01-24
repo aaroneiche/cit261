@@ -27,21 +27,20 @@
                 <div id="layout">
                     <div id="rover_info">
                         <table>
-                            <tr><th>Launch Date</th>    <td id="launch_date"></td></tr>
-                            <tr><th>Landing Date</th>  <td id="land_date"></td></tr>
-                            <tr><th>Status</th><td id="status"></td></tr>
-                            <tr><th>Total Photos</th><td id="total_photos"></td></tr>
-                            <tr><th colspan="2">Cameras</th></tr>
+                            <tr><th>Launch Date: </th>    <td id="launch_date"></td></tr>
+                            <tr><th>Landing Date: </th>  <td id="land_date"></td></tr>
+                            <tr><th>Status: </th><td id="status"></td></tr>
+                            <tr><th>Total Photos: </th><td id="total_photos"></td></tr>
+                            <tr><th colspan="2">Cameras: </th></tr>
                             <tr>
                                 <td id="camera_list" colspan="2"></td>
                             </tr>
                         </table>
                     </div>
                     <div id="rover_pic">
+                        <div>Select a camera on the left to view images </div>
                         <select name="pictures" id="pictures" multiple>
-                            <option value="">first</option>
-                            <option value="">second</option>
-                            <option value="">third</option>
+                            
                         </select>
                     </div>
                 </div>
@@ -50,7 +49,11 @@
         </div>
     </div>
     <div id="photo">
-        <img src="" alt="">
+        <img id="roverPhoto" src="" alt="">
+        
+        <!-- <div id="imageContainer">    
+            <img id="photoLoader" src="marsspinning.gif" alt="" height=30 width=30>
+        </div>    -->
     </div>
     <script>
     
@@ -62,6 +65,7 @@
 
             document.querySelector("#photo").addEventListener("click",e=>{
                 document.querySelector("#photo").style.visibility = "hidden";
+                document.querySelector("#photo img").src = "";
             })
 
             var rovers = document.querySelectorAll(".rover");
