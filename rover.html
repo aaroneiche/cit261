@@ -49,7 +49,9 @@
             </div>
         </div>
     </div>
-    
+    <div id="photo">
+        <img src="" alt="">
+    </div>
     <script>
     
         var data = {};
@@ -57,6 +59,10 @@
 
         //Handle on page load.
         document.addEventListener('DOMContentLoaded',e=>{
+
+            document.querySelector("#photo").addEventListener("click",e=>{
+                document.querySelector("#photo").style.visibility = "hidden";
+            })
 
             var rovers = document.querySelectorAll(".rover");
             
@@ -66,6 +72,9 @@
                     getRoverDetails(r.target.id);
                 });
             })
+
+            
+
         });
 
         function toggleCard() {
@@ -136,20 +145,32 @@
                 return p.camera.name == camera;
             });
 
+            document.querySelector("#pictures").innerHTML = "";
+
             if(photoSet.length > 0 ) {
                 photoSet.forEach(p=>{
                     let op = document.createElement("option");
                     op.innerHTML = `ID: ${p.id} Date:${p.earth_date} Sol: ${p.sol}`
                     op.setAttribute("data-img",p.img_src);
+                    op.addEventListener("click", e=>{
+                        showPicture(e.target.getAttribute("data-img"));
+                    })
                     document.querySelector("#pictures").appendChild(op);
                 });
             }else{
-
+                let op = document.createElement("option");
+                op.innerHTML = "No images for this Camera";
+                document.querySelector("#pictures").appendChild(op);
             }
-            console.log(photoSet);
-
         }
     
+        function showPicture(imageUrl) {
+            let img = document.querySelector("#photo img");
+            img.setAttribute("src",imageUrl);
+            document.querySelector("#photo").style.visibility = "visible";
+
+
+        }
     </script>
 
 </body>
