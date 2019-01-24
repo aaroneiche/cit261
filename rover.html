@@ -125,7 +125,13 @@
 
 
         function getRoverDetails(rover) {
-            var url = "https://api.nasa.gov/mars-photos/api/v1/rovers/" + rover + "/photos?sol=1000&api_key=DEMO_KEY";
+            
+            /*
+            Normally API keys are secret. Fortuantely, NASA hands these out freely. If you want your own key, please go get one:
+            at https://api.nasa.gov/index.html#apply-for-an-api-key 
+            */
+            var nak = `kxaDQyDbQNFu6BqiblPVt0ojjqa8J4ZGJB4UUWyJ`;
+            var url = "https://api.nasa.gov/mars-photos/api/v1/rovers/" + rover + "/photos?sol=1000&api_key=" + nak;
 
             //Create an XMLHttpRequest.
             var r = new XMLHttpRequest();
