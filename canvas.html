@@ -39,11 +39,11 @@
         /* 
         Draws a "pop up video" bubble.
         */
-        function drawBubble(context, x, y, radius, width){
+        function drawBubble(context, x, y, height, width){
 
-            // let radius = 20;
+            let radius = height/2;
             let lineWidth = 2;
-
+            
             //left Arc
             context.beginPath();
             context.arc(x,y,radius, 0.5 * Math.PI, 1.5 * Math.PI);
@@ -109,10 +109,14 @@
             this.currentRadius = 0; //initialize to not-visible.
             this.currentWidth = 0; //Initial the initial width.
 
+            const charHeight = 14;
+
+
             //Previously these were arguments. They should be calculated instead.
             let radius = 10;
-            // let width = 4.6 * text.length; //Calculated by emperical testing.
-            let width = 6.35 * text.length; //Calculated by emperical testing.
+            var lines = this.text.split("\n"); //the number of lines in the text.
+            let width = 6.35 * lines[0].length; //Calculated by emperical testing.
+            let height = (charHeight * lines.length) + 15;
 
             //target values are set at initialization. They are not exposed.
             let targetWidth = width;
@@ -132,19 +136,32 @@
                         this.width += 15;
                     }
                     this.time -= 1; //Decrement time, described in frames.
-                    drawBubble(context, this.x, this.y, this.radius, this.width);
+                    drawBubble(context, this.x, this.y, height, this.width);
+                    let lineStart = this.y - targetRadius;
 
                     context.save();
                     context.beginPath();
                     
-                    // context.fillStyle = "#f00"
-                    // context.fillRect(this.x,this.y - this.radius, this.width, radius * 2);
                     
-                    context.rect(this.x,this.y - this.radius, this.width, radius * 2);
+                    // context.fillStyle = "#000";
+                    // context.fillRect(this.x, this.y - height/2, this.width, height);
+
+                    // This rectangle renders the space that will be clipped around the text to be displayed.
+                    context.rect(this.x, this.y - height/2, this.width, height);
+
                     context.clip();
                     context.font = "14px Arial";
                     context.fillStyle = "#000";
-                    context.fillText(this.text, this.x, this.y + 4);
+                    
+                    //test
+                    // context.beginPath();
+                    // context.moveTo(this.x,this.y - (height/2));
+                    // context.lineTo(this.x + this.width, this.y);
+                    // context.stroke();
+
+                    lines.forEach((line,i)=>{
+                        context.fillText(line, this.x, ((this.y - height/2) + (i * charHeight) + 20));
+                    })
                     context.restore();
                 }
             }
@@ -173,9 +190,13 @@
 
         document.addEventListener('DOMContentLoaded',e=>{
             //Add initial animation items
+
+            // This commented object is a very long text, intended to test flexibility.
+            // animateObjects.push(new PopUp(`Lorem Ipsum is simply dummy text of the printing and typesetting industry.\nLorem Ipsum has been the industry's standard dummy text ever since the 1500s,\nwhen an unknown printer took a galley of type and scrambled it to make a type specimen book.\nIt has survived not only five centuries, but also the leap into electronic typesetting,\nremaining essentially unchanged. It was popularised in the 1960s with the release of\nLetraset sheets containing Lorem Ipsum passages,\nand more recently with desktop publishing software\nlike Aldus PageMaker including versions of Lorem Ipsum.`, 100, 100, 0.1, 4.0, ctx));
+
             animateObjects.push(new PopUp("Modern times was released in February, 1936 by United Artists", 100, 100, 0.5, 4.0, ctx));
             animateObjects.push(new PopUp("Chaplin originally planned for it to be his first 'talkie'", 160, 320, 5.7, 9.5, ctx));
-            animateObjects.push(new PopUp("After experimenting, he decided the appeal of 'the little tramp' would be lost if he ever spoke.", 10, 20, 12, 16, ctx));
+            animateObjects.push(new PopUp("After experimenting, he decided the appeal of\n'the little tramp' would be lost if he ever spoke.", 200, 250, 12, 16, ctx));
             animateObjects.push(timestamp);
 
             animate(); // start the animation right away.
