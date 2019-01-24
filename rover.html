@@ -83,6 +83,8 @@
             document.querySelector("td#status").innerHTML = rover.status;
             document.querySelector("td#total_photos").innerHTML = rover.total_photos;
 
+            rover.cameras.push({"name":"all", "full_name":"All Cameras"});
+
             //Clear the camera list.
             document.querySelector("td#camera_list").innerHTML = "";
             rover.cameras.forEach(c=>{
@@ -91,13 +93,10 @@
                 cam.innerHTML = c.full_name;
                 
                 cam.addEventListener("click", ev => {
-                    console.log(ev);    
-                    ev.stopPropagation();
+                    listImages(ev.target.getAttribute("data-cam"));
                 })
 
                 document.querySelector("td#camera_list").appendChild(cam);
-
-                //data.photos.filter(p=>{return p.camera.name == "NAVCAM";});
             })
         }
 
@@ -137,6 +136,16 @@
                 return p.camera.name == camera;
             });
 
+            if(photoSet.length > 0 ) {
+                photoSet.forEach(p=>{
+                    let op = document.createElement("option");
+                    op.innerHTML = `ID: ${p.id} Date:${p.earth_date} Sol: ${p.sol}`
+                    op.setAttribute("data-img",p.img_src);
+                    document.querySelector("#pictures").appendChild(op);
+                });
+            }else{
+
+            }
             console.log(photoSet);
 
         }
