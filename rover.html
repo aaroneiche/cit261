@@ -24,7 +24,7 @@
                 <div id="introduction">
                     Did you know that Mars is a planet populated entirely by robots? It's true.
                     Humanity has been sending robotic probes to Mars since 1975 with the Viking 1. 
-                    In the last couple of decades we've put a few rovers - mobile science labs 
+                    In the last couple of decades we've put a few rovers - mobile science labs -
                     on the red planet. NASA has kindly <a href="https://api.nasa.gov/api.html" target="_blank">provided an API</a>
                     to view images taken by these robots.
                     Click on a Rover above for more information and to browse images.
@@ -155,7 +155,11 @@
     
         function listImages(camera) {
             let photoSet = data.photos.filter(p=>{
-                return p.camera.name == camera;
+                if(camera == "all"){
+                    return true;
+                }else{
+                    return p.camera.name == camera;
+                }
             });
 
             document.querySelector("#pictures").innerHTML = "";
