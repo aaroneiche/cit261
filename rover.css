@@ -54,6 +54,7 @@ body {
     justify-content: center;
     margin-top: 6px;
     width: 100%;   
+    flex-wrap: wrap;
 }
 
 .rover {
@@ -108,6 +109,12 @@ div.loader img {
 .rover#spirit { background-image: url("rover/spirit.jpg");}
 .rover#opportunity {background-image: url("rover/opportunity.jpg")}
 .rover#curiosity {background-image: url("rover/curiosity.jpg")}
+
+#introduction {
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
 
 div.title {
     display: flex;
