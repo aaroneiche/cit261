@@ -97,6 +97,7 @@
         function displayRoverDetails() {
 
             rover = data.photos[0].rover;
+            document.querySelector("#pictures").innerHTML = "";
 
             document.querySelector("#rover_details .title").innerHTML = rover.name;
             
@@ -167,7 +168,7 @@
             if(photoSet.length > 0 ) {
                 photoSet.forEach(p=>{
                     let op = document.createElement("option");
-                    op.innerHTML = `ID: ${p.id} Date:${p.earth_date} Sol: ${p.sol}`
+                    op.innerHTML = `ID:${p.id} Date:${p.earth_date} Cam:${p.camera.name}`
                     op.setAttribute("data-img",p.img_src);
                     op.addEventListener("click", e=>{
                         showPicture(e.target.getAttribute("data-img"));
