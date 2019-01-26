@@ -20,7 +20,6 @@ body {
     transition: all 500ms;
     width: 100%;
     height: 400px;
-    background-color: peru;
 }
 
 #card.flipped {
@@ -32,6 +31,8 @@ body {
     position: absolute;
     display: flex;
     align-items: center;
+    background-color: peru;
+    height: 100%;
     /* background-color: white; */
 }
 
@@ -46,14 +47,13 @@ body {
     height: 100%;
 }
 
-.rover div.loader.show {
+.rover div#loader.show {
     visibility: visible;
 }
 
 #rovers {
     display: flex;
     justify-content: center;
-    margin-top: 6px;
     width: 100%;   
     flex-wrap: wrap;
 }
@@ -87,7 +87,7 @@ body {
     height: 40px;
 }
 
-div.loader {
+#rovers.front div#loader {
     width: 200px;
     height: 200px;
     background-color: rgba(0, 0, 0, 0.5);
@@ -99,7 +99,7 @@ div.loader {
     visibility: hidden;
 }
 
-div.loader img {
+div#loader img {
     height: 40px;
     width: 40px;
     display: flex;

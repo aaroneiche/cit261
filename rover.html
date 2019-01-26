@@ -14,7 +14,7 @@
     <div id="container">
         <div id="card" class="">
             <div id="rovers" class="face front">
-                <div class="loader">
+                <div id="loader">
                     <img src="marsspinning.gif" alt="" height=30 width=30>
                 </div>                    
                 <!-- <button onclick="toggleCard(null)">Go to Rover</button> -->
@@ -139,8 +139,9 @@
             
             //Set a loading spinner.
 
-            document.querySelector(".loader").style.left = document.querySelector("#" + rover).offsetLeft + "px";
-            document.querySelector(".loader").style.visibility = "visible";
+            document.querySelector("#loader").style.left = document.querySelector("#" + rover).offsetLeft + "px";
+            document.querySelector("#loader").style.top = document.querySelector("#" + rover).offsetTop + "px";
+            document.querySelector("#loader").style.visibility = "visible";
 
             //ES2015 approach. You could easily do:
             // r.onload = function (){ ...
@@ -151,7 +152,7 @@
                     displayRoverDetails();
                     toggleCard();
                     // document.querySelector(".rover div.loader").classList.remove("show");
-                    document.querySelector(".loader").style.visibility = "hidden";
+                    document.querySelector("#rovers.front div#loader").style.visibility = "hidden";
                 }else{
                     //probably an error - possibly a 3xx status code.
                     alert("Error communicating with NASA");
