@@ -28,6 +28,7 @@ body {
 
 .face {
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden; /* backface-visibility is not supported in Safari */
     position: absolute;
     display: flex;
     align-items: center;
