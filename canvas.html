@@ -9,13 +9,13 @@
 </head>
 <body>
     <div id="controls">
-        <button onclick="play();">Play</button>
-        <button onclick="pause();">Pause</button>
+        <button id="playButton" onclick="togglePlay();">Play</button>
+        <!-- <button onclick="pause();">Pause</button> -->
         <button onclick="toggleTimestamp()">Timestamp</button>
     </div>
     <div id="container">
         <canvas id="canvas" class="over"></canvas>
-        <video id="video" src="modern_times.mp4" class="over"></video>
+        <video id="video" src="modern_times1.mp4" class="over"></video>
         <audio id="audio">
             <source src="pop.wav" type="audio/wav">
             Your browser does not support the audio tag.
@@ -123,13 +123,14 @@
             let targetRadius = radius;
 
             this.draw = function(){
-                
-                if(this.audioPlayed === false && timestamp.currentTime > this.startTime) {
+                let time = document.querySelector("#video").currentTime;
+
+                if(this.audioPlayed === false && time > this.startTime) {
                     audio.play();
                     this.audioPlayed = true;
                 }
-
-                if(timestamp.currentTime > this.startTime && timestamp.currentTime < this.endTime) {
+                
+                if(time > this.startTime && time < this.endTime) {
                     if(this.radius < targetRadius) {
                         this.radius += 2;
                     }else if(this.width < targetWidth) {
@@ -167,17 +168,22 @@
             }
         }
 
-        function play(){
-            document.getElementById("video").play();
+        function togglePlay(){
+            let video = document.getElementById("video");
+
+            if(video.paused){
+                video.play();
+                document.getElementById("playButton").innerHTML = "Pause";
+            }else{
+                video.pause();
+                document.getElementById("playButton").innerHTML = "Play";
+            }
         }
         
-        function pause(){
-            document.getElementById("video").pause();
-        }
-    
         function Timestamp(context) {
             this.animate = true;
             this.currentTime = 0;
+            this.show = true;
             this.draw = ()=> {              
                 this.currentTime = document.querySelector("#video").currentTime;
                 context.font = "20px Arial";
@@ -196,10 +202,11 @@
 
             animateObjects.push(new PopUp("Modern times was released in February, 1936 by United Artists", 100, 100, 0.5, 4.0, ctx));
             animateObjects.push(new PopUp("Chaplin originally planned for it to be his first 'talkie':\nA motion picture with synchronized sound", 160, 320, 5.7, 10.5, ctx));
-            animateObjects.push(new PopUp("After experimenting, he decided the appeal of\n'the little tramp' would be lost if the character\n ever spoke.", 200, 250, 14, 19, ctx));
-            animateObjects.push(new PopUp("The film was inducted into the Library of Congress in 1989", 40, 240, 23, 27, ctx));
-            animateObjects.push(new PopUp("It also was shown 'out of competition'\nat the 2003 Cannes Film festival", 320, 160, 31, 35, ctx));
+            animateObjects.push(new PopUp("After experimenting, he decided the appeal of\n'the little tramp' would be lost if the character\n ever spoke.", 250, 275, 14, 19, ctx));
+            animateObjects.push(new PopUp("The film was inducted into the Library of Congress in 1989", 40, 340, 23, 27, ctx));
+            animateObjects.push(new PopUp("It also was shown 'out of competition'\nat the 2003 Cannes Film festival", 320, 120, 31, 35, ctx));
             animateObjects.push(new PopUp("The film was shot at 18fps, but played back at 24fps\nto make the action seem more frantic.", 250, 50, 40, 46, ctx));
+            animateObjects.push(new PopUp("It remains one of Chaplin's most recognizable works.", 250, 320, 51, 56, ctx));
             animateObjects.push(timestamp);
 
             animate(); // start the animation right away.
@@ -218,6 +225,7 @@
 
             animateObjects.forEach(element => {
                 if(element.animate == true){
+                    // console.log("drawing " + element);
                     element.draw();
                 }
             });
@@ -225,6 +233,8 @@
         }
 
         function toggleTimestamp() {
+            // let last = animateObjects[animateObjects.length -1]
+            // animateObjects[last].animate = animateObjects[last].animate
             timestamp.animate = !timestamp.animate;
         }
 
