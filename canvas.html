@@ -12,6 +12,7 @@
         <button id="playButton" onclick="togglePlay();">Play</button>
         <!-- <button onclick="pause();">Pause</button> -->
         <button onclick="toggleTimestamp()">Timestamp</button>
+        <button onclick="toggleInfo()">Info</button>
     </div>
     <div id="container">
         <canvas id="canvas" class="over"></canvas>
@@ -20,6 +21,17 @@
             <source src="https://www.dropbox.com/s/rlrbm69swydrxmn/pop.wav?dl=1" type="audio/wav">
             Your browser does not support the audio tag.
         </audio>
+        <div id="info" class="over hide"> 
+            This app shows factual information about a film while it's playing. 
+            It uses a concept called "pop ups" which became popular in the mid-90s. 
+            The app relies on a Canvas overlay where the popups are generated and shown.
+            The Play/pause button plays the film, but will not prevent pop-ups being drawn 
+            on the canvas. <br><br>
+            This contains about 1 minute of Charlie Chaplin's "Modern Times".
+            <br>
+            <br>
+            For scaling to the background, browser width is best at ~1130px
+        </div>
     </div>
 
     <script>
@@ -30,11 +42,10 @@
         var audio = document.getElementById("audio");
         var ctx = canvas.getContext("2d");
 
-        //Each of these should have their own draw methdo to call.
+        //Each of these should have their own draw method to call.
         var animateObjects = [];
 
         var timestamp = new Timestamp(ctx);
-        timestamp.animate = true;
 
         /* 
         Draws a "pop up video" bubble.
@@ -181,9 +192,8 @@
         }
         
         function Timestamp(context) {
-            this.animate = true;
+            this.animate = false;
             this.currentTime = 0;
-            this.show = true;
             this.draw = ()=> {              
                 this.currentTime = document.querySelector("#video").currentTime;
                 context.font = "20px Arial";
@@ -201,12 +211,12 @@
             // animateObjects.push(new PopUp(`Lorem Ipsum is simply dummy text of the printing and typesetting industry.\nLorem Ipsum has been the industry's standard dummy text ever since the 1500s,\nwhen an unknown printer took a galley of type and scrambled it to make a type specimen book.\nIt has survived not only five centuries, but also the leap into electronic typesetting,\nremaining essentially unchanged. It was popularised in the 1960s with the release of\nLetraset sheets containing Lorem Ipsum passages,\nand more recently with desktop publishing software\nlike Aldus PageMaker including versions of Lorem Ipsum.`, 100, 100, 0.1, 4.0, ctx));
 
             animateObjects.push(new PopUp("Modern times was released in February, 1936 by United Artists", 100, 100, 0.5, 4.0, ctx));
-            animateObjects.push(new PopUp("Chaplin originally planned for it to be his first 'talkie':\nA motion picture with synchronized sound", 160, 320, 5.7, 10.5, ctx));
-            animateObjects.push(new PopUp("After experimenting, he decided the appeal of\n'the little tramp' would be lost if the character\n ever spoke.", 250, 275, 14, 19, ctx));
+            animateObjects.push(new PopUp("Chaplin originally planned for it to be his first 'talkie':\nA motion picture with synchronized sound", 140, 320, 5.7, 10.5, ctx));
+            animateObjects.push(new PopUp("After experimenting, he decided the appeal of\n'the little tramp' would be lost if the character\n ever spoke.", 200, 275, 14, 19, ctx));
             animateObjects.push(new PopUp("The film was inducted into the Library of Congress in 1989", 40, 340, 23, 27, ctx));
-            animateObjects.push(new PopUp("It also was shown 'out of competition'\nat the 2003 Cannes Film festival", 320, 120, 31, 35, ctx));
-            animateObjects.push(new PopUp("The film was shot at 18fps, but played back at 24fps\nto make the action seem more frantic.", 250, 50, 40, 46, ctx));
-            animateObjects.push(new PopUp("It remains one of Chaplin's most recognizable works.", 250, 320, 51, 56, ctx));
+            animateObjects.push(new PopUp("It also was shown 'out of competition'\nat the 2003 Cannes Film festival", 220, 80, 31, 35, ctx));
+            animateObjects.push(new PopUp("The film was shot at 18fps, but played back at 24fps\nto make the action seem more frantic.", 40, 50, 40, 46, ctx));
+            animateObjects.push(new PopUp("It remains one of Chaplin's most recognizable works.", 80, 320, 51, 56, ctx));
             animateObjects.push(timestamp);
 
             animate(); // start the animation right away.
@@ -236,6 +246,10 @@
             // let last = animateObjects[animateObjects.length -1]
             // animateObjects[last].animate = animateObjects[last].animate
             timestamp.animate = !timestamp.animate;
+        }
+
+        function toggleInfo() {
+            let vis = document.getElementById("info").classList.toggle("hide");
         }
 
     </script>
