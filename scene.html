@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Make a Scene</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="scene.css" />
+</head>
+
+<body > <!-- onclick="addNextClass()"> -->
+    <div class="pane" id="left">
+        This is the scene
+        
+        <div id="grass"></div>
+        <div id="sunspace">
+
+
+        </div>
+    </div>
+    <div class="pane" id="right">
+        This is the code
+    </div>
+    <script>
+
+        var currentPosition = 0;
+        var currentScriptPosition = 0;
+
+        var script = `My name is Aaron.
+I wanted to see if I could write a fun little CSS App.
+Let's see what we can do.
+First, lets get to a place where we can see our work.`;
+
+
+        var classSet = [
+            ["body {margin: 8px;}","body div.pane {border: black solid 1px;}"],
+            ["body div.pane {height:90%; width: 45%;}", 
+             "body {margin-top: 3% !important; padding: 2px;}"],
+            ["div.pane {top: 5%}","div.pane#left {margin-left: 4%}", "div.pane#right {left: 50%}"],
+            ["div.pane#left {transform: rotateY(10deg);}",
+                "div.pane#right {transform: rotateY(-10deg);}"]
+        ];
+
+        document.addEventListener('DOMContentLoaded', e => {
+            
+            style = document.createElement('style');
+            document.head.appendChild(style);
+            s = style.sheet;
+        });
+
+        function addNextClass() {
+
+            if (Array.isArray(classSet[currentPosition]) === true) {
+                classSet[currentPosition].forEach(r => {
+                    s.insertRule(r);
+                })
+            } else {
+                s.insertRule(classSet[currentPosition]);
+            }
+            currentPosition++;
+        }
+
+        function writeCode() {
+            lines = script.split("\n");
+            chars = lines[currentScriptPosition].split("");
+            
+            var el = document.getElementById("right");
+            el.innerHTML = el.innerHTML + "\n> ";
+            chars.forEach(c=>{
+                el.innerHTML =   el.innerHTML + c;
+            });
+            currentScriptPosition++;
+        }
+
+    </script>
+</body>
+
+</html>

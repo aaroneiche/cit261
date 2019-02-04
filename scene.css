@@ -1,0 +1,78 @@
+/*
+This is the style page for scene.
+*/
+
+* {
+    -webkit-transition: all 1s;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    background-color: darkgray;
+    position: relative;
+    perspective: 900px;
+    overflow-y: hidden;
+    margin: 0;
+}
+
+body div.pane {
+    background: white;    
+    height: 100%;
+    width: 100%;
+    /* padding: 2px; */
+    position: absolute;
+    top: 0px;
+    /* left: 0px; */
+
+}
+
+body div.pane#right {
+    background-color: black;
+    color: orange;
+    text-shadow: 1px 1px 13px;    
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    white-space: pre;
+}
+
+/* Below this are rules that are in the code */
+
+body {margin: 8px;}
+body div.pane {
+    border: black solid 1px; 
+    border-radius: 10px;
+}
+
+body div.pane {height:90%; width: 45%;}
+ 
+body {margin-top: 3% !important; padding: 2px;}
+
+div.pane {top: 3%}
+div.pane#left {left: 3%;}
+div.pane#right {right: 3%;}
+
+div.pane#left {transform: rotateY(10deg);}
+div.pane#right {transform: rotateY(-10deg);}
+
+
+div#left {
+    background-color: skyblue;
+}
+
+div#grass {
+    height: 35%;
+    width: 100%;
+    background-color: green;
+    position: absolute;
+    bottom: 0px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+/* 
+div#sunspace {
+    width: 100%;
+    height: 8%;
+} */
