@@ -10,15 +10,19 @@
 </head>
 
 <body > <!-- onclick="addNextClass()"> -->
-    <div class="pane" id="left">
+    <div class="pane" id="left" onclick="swapNight()">
         This is the scene
         
         <div id="grass"></div>
-        <div id="sunblock">
-                <div id="sun"> </div>
-                <div class="ray"> </div>
+        <div id="sun_container">
+            <div id="sun"> </div>
+            <div class="ray"> </div>
         </div>
-        
+
+        <div id="moon_container">
+            <div id="moon"></div>
+        </div>
+
     </div>
     <div class="pane" id="right">
         This is the code
@@ -49,6 +53,10 @@ First, lets get to a place where we can see our work.`;
             document.head.appendChild(style);
             s = style.sheet;
         });
+
+        function swapNight() {
+            document.getElementById("left").classList.toggle("night");
+        }
 
         function addNextClass() {
 
