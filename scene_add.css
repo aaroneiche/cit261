@@ -1,0 +1,85 @@
+body {margin: 8px;}
+body div.pane {
+    border: black solid 1px; 
+    border-radius: 10px;
+}
+/*--- ---*/
+body div.pane {height:90%; width: 45%;}
+/*--- ---*/
+body {margin-top: 3% !important; padding: 2px;}
+/*--- ---*/
+div.pane {top: 3%;}
+div.pane#left {left: 3%;}
+div.pane#right {left: 50%;}
+/*--- ---*/
+div.pane#left {transform: rotateY(10deg);}
+div.pane#right {transform: rotateY(-10deg);}
+/*--- ---*/
+
+div#left {
+    background-color: skyblue;
+}
+/*--- ---*/
+div#grass {
+    height: 35%;
+    width: 100%;
+    background-color: yellowgreen;
+    position: absolute;
+    bottom: 0px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    z-index: 10;
+}
+/*--- ---*/
+div#sun_container {
+    position: relative;
+    top: 500px;
+    left: 200px;
+}
+div#sun {
+    height: 150px;
+    width: 150px;
+    background-color: goldenrod;
+    clip-path: circle(50%);
+    z-index: 5;
+    position: absolute;
+}
+/*--- ---*/
+div#sun_container {
+    top: 100px;
+    left: 200px;
+}
+/*--- ---*/
+div#left div#moon_container {
+    top: 550px;
+    left: 300px;
+    position: absolute;
+}
+/*--- ---*/
+div#moon {
+    height: 100px;
+    width: 100px;
+    background-color: white;
+    clip-path: circle(50%);
+    position: absolute;
+}
+
+/*--- ---*/
+div#left div#moon_container {
+    top: 150px;
+    left: 300px;
+}
+div#left #sun_container {
+    top: 500px;
+}
+/*--- ---*/
+
+div#left div#grass {
+    background-color: darkgreen;
+}
+/*--- ---*/
+div#left {
+    background-color: darkviolet;
+}
+/*--- ---*/
+

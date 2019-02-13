@@ -7,12 +7,11 @@
     <title>Make a Scene</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="scene.css" />
+    <link id="add" rel="stylesheet" type="text/text" media="screen" href="scene_add.css" />
 </head>
 
-<body > <!-- onclick="addNextClass()"> -->
-    <div class="pane" id="left" onclick="swapNight()">
-        This is the scene
-        
+<body onclick="addNextClass()">
+    <div class="pane" id="left">        
         <div id="grass"></div>
         <div id="sun_container">
             <div id="sun"> </div>
@@ -32,26 +31,21 @@
         var currentPosition = 0;
         var currentScriptPosition = 0;
 
+        var extraStyles = [];
+
         var script = `My name is Aaron.
 I wanted to see if I could write a fun little CSS App.
 Let's see what we can do.
 First, lets get to a place where we can see our work.`;
-
-
-        var classSet = [
-            ["body {margin: 8px;}","body div.pane {border: black solid 1px;}"],
-            ["body div.pane {height:90%; width: 45%;}", 
-             "body {margin-top: 3% !important; padding: 2px;}"],
-            ["div.pane {top: 5%}","div.pane#left {margin-left: 4%}", "div.pane#right {left: 50%}"],
-            ["div.pane#left {transform: rotateY(10deg);}",
-                "div.pane#right {transform: rotateY(-10deg);}"]
-        ];
 
         document.addEventListener('DOMContentLoaded', e => {
             
             style = document.createElement('style');
             document.head.appendChild(style);
             s = style.sheet;
+            
+            loadExtraStyles();
+
         });
 
         function swapNight() {
@@ -60,12 +54,12 @@ First, lets get to a place where we can see our work.`;
 
         function addNextClass() {
 
-            if (Array.isArray(classSet[currentPosition]) === true) {
-                classSet[currentPosition].forEach(r => {
+            if (Array.isArray(extraStyles[currentPosition]) === true) {
+                extraStyles[currentPosition].forEach(r => {
                     s.insertRule(r);
                 })
             } else {
-                s.insertRule(classSet[currentPosition]);
+                s.insertRule(extraStyles[currentPosition]);
             }
             currentPosition++;
         }
@@ -82,6 +76,40 @@ First, lets get to a place where we can see our work.`;
             currentScriptPosition++;
         }
 
+
+        function loadExtraStyles() {
+            return fetch("scene_add.css").then(r=>{
+              return r.text().then(t=>{
+
+                var sets = t.split("/*--- ---*/");
+
+
+                sets.forEach(s=>{
+
+                    var rules = s.replace(/[\n]/gm,"").split("}");
+                    rules.forEach((r,i)=>{
+                        if(r.length == 0){
+                            rules.pop();
+                        }else{
+                            rules[i] += "}";
+                        }
+                    })
+
+                    extraStyles.push(rules);                    
+                })
+
+                // for(rules in sets) {
+                //     var r = sets[rules].replace(/\n/,"").split("}");
+
+
+
+                //     extraStyles.push(r);
+                // }
+
+                // extraStyles = sets;
+              });  
+            })
+        }
     </script>
 </body>
 
