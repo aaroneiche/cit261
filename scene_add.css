@@ -46,16 +46,16 @@ div#sun {
 }
 /*--- ---*/
 div#sun_container {
-    top: 100px;
+    top: 100px !important;
     left: 200px;
 }
-/*--- ---*/
+
 div#left div#moon_container {
     top: 550px;
     left: 300px;
     position: absolute;
 }
-/*--- ---*/
+
 div#moon {
     height: 100px;
     width: 100px;
@@ -66,20 +66,19 @@ div#moon {
 
 /*--- ---*/
 div#left div#moon_container {
-    top: 150px;
+    top: 150px !important;
     left: 300px;
 }
 div#left #sun_container {
-    top: 500px;
+    top: 500px !important;
 }
-/*--- ---*/
 
 div#left div#grass {
     background-color: darkgreen;
 }
-/*--- ---*/
 div#left {
-    background-color: darkviolet;
+    background-color: darkviolet !important;
 }
+
 /*--- ---*/
 

@@ -57,9 +57,11 @@ First, lets get to a place where we can see our work.`;
             if (Array.isArray(extraStyles[currentPosition]) === true) {
                 extraStyles[currentPosition].forEach(r => {
                     s.insertRule(r);
+                    console.log(r);
                 })
             } else {
                 s.insertRule(extraStyles[currentPosition]);
+                console.log(extraStyles[currentPosition]);
             }
             currentPosition++;
         }
@@ -82,8 +84,6 @@ First, lets get to a place where we can see our work.`;
               return r.text().then(t=>{
 
                 var sets = t.split("/*--- ---*/");
-
-
                 sets.forEach(s=>{
 
                     var rules = s.replace(/[\n]/gm,"").split("}");
