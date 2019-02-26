@@ -38,3 +38,66 @@ body div.pane#right {
     white-space: pre;
     text-transform: uppercase;
 }
+
+div.cow_container {
+    background-image: url("cow.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 50px;
+    width: 80px;
+    visibility: hidden;
+    position: absolute;
+}
+div#cow1 {
+    top: 480px;
+    z-index: 12;   
+}
+
+div#cow2 {
+    top: 550px;
+    left: 300px;
+    z-index: 12;   
+}
+
+div#saucer {
+    position: relative;
+    top: 50px;
+    left: 50px;
+}
+
+div#saucer .top{
+    border-bottom: 15px solid grey;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    height: 0;
+    width: 30px;
+}
+
+div#saucer .middle{
+    width: 60px;
+    height: 30px;
+    border-radius: 60px/30px;
+    background-color: grey;
+    position: absolute;
+    left: -10px;
+    top: 11px;
+}
+
+
+@keyframes cow_drop {
+    0% {top: 400px}
+    5% {transform: rotate(10deg) }
+    10% {transform: rotate(-10deg)}
+    15% {transform: rotate(10deg); top: 400px;}
+    
+    100% { top: 480px;}
+}
+
+@keyframes cow_drop2 {
+    0% {top: 500px}
+    5% {transform: rotate(10deg) }
+    10% {transform: rotate(-10deg)}
+    15% {transform: rotate(10deg); top: 500px;}
+    
+    100% { top: 550px;}
+}

@@ -3,23 +3,23 @@ body div.pane {
     border: black solid 1px; 
     border-radius: 10px;
 }
-/*--- ---*/
+
 body div.pane {height:90%; width: 45%;}
-/*--- ---*/
+
 body {margin-top: 3% !important; padding: 2px;}
-/*--- ---*/
+
 div.pane {top: 3%;}
 div.pane#left {left: 3%;}
 div.pane#right {left: 50%;}
-/*--- ---*/
+
 div.pane#left {transform: rotateY(10deg);}
 div.pane#right {transform: rotateY(-10deg);}
-/*--- ---*/
+
 
 div#left {
     background-color: skyblue;
 }
-/*--- ---*/
+
 div#grass {
     height: 35%;
     width: 100%;
@@ -30,7 +30,7 @@ div#grass {
     border-bottom-right-radius: 10px;
     z-index: 10;
 }
-/*--- ---*/
+
 div#sun_container {
     position: relative;
     top: 500px;
@@ -44,7 +44,7 @@ div#sun {
     z-index: 5;
     position: absolute;
 }
-/*--- ---*/
+
 div#sun_container {
     top: 100px !important;
     left: 200px;
@@ -63,6 +63,21 @@ div#moon {
     clip-path: circle(50%);
     position: absolute;
 }
+
+/*--- ---*/
+div#cow1 {
+    visibility: visible;
+    left: 50px;
+    animation: cow_drop 1.5s linear;
+}
+
+/*--- ---*/
+div#cow2 {
+    visibility: visible;
+    left: 300px;
+    animation: cow_drop2 1.5s linear;
+}
+
 
 /*--- ---*/
 div#left div#moon_container {
