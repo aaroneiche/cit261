@@ -61,8 +61,7 @@ div#cow2 {
 
 div#saucer {
     position: relative;
-    top: 50px;
-    left: 50px;
+    animation: saucer_movement 5s ease-in-out infinite;
 }
 
 div#saucer .top{
@@ -83,6 +82,22 @@ div#saucer .middle{
     top: 11px;
 }
 
+div#saucer #lightband {
+    position: absolute;
+    display: flex;
+    top: 23px;
+    left: -8px;
+    animation: saucer_spin 1s linear infinite;
+
+}
+
+div#saucer #lightband .light{
+    height: 3px;
+    width: 10px;
+    background-color: red;
+    top: 10px;
+    margin-right: 10px;
+}    
 
 @keyframes cow_drop {
     0% {top: 400px}
@@ -100,4 +115,34 @@ div#saucer .middle{
     15% {transform: rotate(10deg); top: 500px;}
     
     100% { top: 550px;}
+}
+
+@keyframes saucer_spin {
+    0% { left:-8px;}
+    100% { left: 40px; }
+} 
+
+@keyframes saucer_movement {
+    0% {
+        top: 10px;
+        left: 30px;
+        transform: rotate(25deg)
+        
+    }
+
+    25% {
+        top: 150px;
+        left: 200px;
+        transform: rotate(-25deg)
+    }
+
+    50% {
+        top: 200px;
+        left: 220px;
+    }
+
+    100% {
+        top: 350px;
+        left: 300px;
+    }
 }
