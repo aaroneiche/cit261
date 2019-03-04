@@ -51,8 +51,8 @@ div#sun_container {
 }
 
 div#left div#moon_container {
-    top: 550px;
-    left: 300px;
+    top: 75%;
+    left: 60%;
     position: absolute;
 }
 
@@ -67,14 +67,14 @@ div#moon {
 /*--- ---*/
 div#cow1 {
     visibility: visible;
-    left: 50px;
+    left: 10%;
     animation: cow_drop 1.5s linear;
 }
 
 /*--- ---*/
 div#cow2 {
     visibility: visible;
-    left: 300px;
+    left: 70%;
     animation: cow_drop2 1.5s linear;
 }
 
@@ -85,7 +85,7 @@ div#left div#moon_container {
     left: 300px;
 }
 div#left #sun_container {
-    top: 500px !important;
+    top: 70% !important;
 }
 
 div#left div#grass {
