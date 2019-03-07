@@ -1,9 +1,12 @@
+/*
+Hello, my name is Aaron
+This is a little CSS project that I've built.
+*/
 body {margin: 8px;}
 body div.pane {
     border: black solid 1px; 
     border-radius: 10px;
 }
-
 body div.pane {height:90%; width: 45%;}
 /*--- ---*/
 body {margin-top: 3% !important; padding: 2px;}
@@ -11,7 +14,7 @@ body {margin-top: 3% !important; padding: 2px;}
 div.pane {top: 3%;}
 div.pane#left {left: 3%;}
 div.pane#right {left: 50%;}
-
+/*--- ---*/
 div.pane#left {transform: rotateY(10deg);}
 div.pane#right {transform: rotateY(-10deg);}
 /*--- ---*/

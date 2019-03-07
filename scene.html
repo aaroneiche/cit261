@@ -10,7 +10,7 @@
     <link id="add" rel="stylesheet" type="text/text" media="screen" href="scene_add.css" />
 </head>
 
-<body onclick="addNextClass()">
+<body onclick="nextStep()">
     <div class="pane" id="left">        
         <div id="grass"></div>
         <div id="sun_container">
@@ -43,13 +43,6 @@
         var extraStyles = [];
         var letterArray = [];
 
-        var script = `My name is Aaron.
-I wanted to see if I could write a fun little CSS App.
-Let's see what we can do.
-First, lets get to a place where we can see our work.
-That'll do.
-Okay - let's give ourselves a sky.`;
-
         document.addEventListener('DOMContentLoaded', e => {
             
             style = document.createElement('style');
@@ -60,20 +53,21 @@ Okay - let's give ourselves a sky.`;
 
         });
 
-        function swapNight() {
-            document.getElementById("left").classList.toggle("night");
+        function nextStep() {
+            addNextClass(extraStyles[currentPosition]);
         }
 
-        function addNextClass() {
 
-            if (Array.isArray(extraStyles[currentPosition]) === true) {
-                extraStyles[currentPosition].forEach(r => {
+        function addNextClass(nextStyle) {
+
+            if (Array.isArray(nextStyle) === true) {
+                nextStyle.forEach(r => {
                     s.insertRule(r);
                     console.log(r);
                 })
             } else {
-                s.insertRule(extraStyles[currentPosition]);
-                console.log(extraStyles[currentPosition]);
+                s.insertRule(nextStyle);
+                console.log(nextStyle);
             }
             currentPosition++;
         }
@@ -84,7 +78,7 @@ Okay - let's give ourselves a sky.`;
             }
         }
 
-        function writeCode() {
+        function writeCode(script) {
             lines = script.split("\n");
             chars = lines[currentScriptPosition].split("");
             
@@ -99,11 +93,6 @@ Okay - let's give ourselves a sky.`;
                     clearInterval(typer);
                 }
             },80)
-            
-
-            // chars.forEach(c=>{
-            //     el.innerHTML =   el.innerHTML + c;
-            // });
 
             currentScriptPosition++;
         }
@@ -113,10 +102,20 @@ Okay - let's give ourselves a sky.`;
             return fetch("scene_add.css").then(r=>{
               return r.text().then(t=>{
 
+                //This represents a divide in 'steps' 
                 var sets = t.split("/*--- ---*/");
-                sets.forEach(s=>{
 
-                    var rules = s.replace(/[\n]/gm,"").split("}");
+                sets.forEach(s=>{
+                    //put the text in the styles array, we'll strip it on the other side.
+                    var text = s.match(/\/*[\s\S]*\//gm,"");
+                    if(text != null) {
+                        extraStyles.push(text);
+                    }
+
+                    //Get rid of the text, so it doesn't get in the way.
+                    set = s.replace(/\/*[\s\S]*\//gm,"");
+
+                    var rules = set.replace(/[\n]/gm,"").split("}");
                     rules.forEach((r,i)=>{
                         if(r.length == 0){
                             rules.pop();
