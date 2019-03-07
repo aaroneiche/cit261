@@ -27,7 +27,7 @@ body div.pane {
     position: absolute;
     top: 0px;
     left: 0;
-
+    overflow: hidden;
 }
 
 body div.pane#right {
@@ -37,6 +37,7 @@ body div.pane#right {
     font-family: monospace;
     white-space: pre;
     text-transform: uppercase;
+    padding-left: 30px;
 }
 
 div#grass {
@@ -66,7 +67,9 @@ div#cow2 {
 
 div#saucer {
     position: relative;
-    animation: saucer_movement 10s ease-in-out infinite;
+    left: -50px;
+    top: -50px;
+    /* animation: saucer_movement 10s ease-in-out infinite; */
 }
 
 div#saucer .top{

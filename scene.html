@@ -34,7 +34,6 @@
 
     </div>
     <div class="pane" id="right">
-        This is the code
     </div>
     <script>
 
@@ -42,11 +41,14 @@
         var currentScriptPosition = 0;
 
         var extraStyles = [];
+        var letterArray = [];
 
         var script = `My name is Aaron.
 I wanted to see if I could write a fun little CSS App.
 Let's see what we can do.
-First, lets get to a place where we can see our work.`;
+First, lets get to a place where we can see our work.
+That'll do.
+Okay - let's give ourselves a sky.`;
 
         document.addEventListener('DOMContentLoaded', e => {
             
@@ -76,15 +78,33 @@ First, lets get to a place where we can see our work.`;
             currentPosition++;
         }
 
+        function typeLetter() {
+            if(letterArray.length > 0) {
+                var el = document.getElementById("right").innerHTML += letterArray.shift();
+            }
+        }
+
         function writeCode() {
             lines = script.split("\n");
             chars = lines[currentScriptPosition].split("");
             
-            var el = document.getElementById("right");
+            el = document.getElementById("right");
             el.innerHTML = el.innerHTML + "\n> ";
-            chars.forEach(c=>{
-                el.innerHTML =   el.innerHTML + c;
-            });
+            
+            var typer = setInterval(function(){
+                if(chars.length > 0) {
+                    el.innerHTML = el.innerHTML + chars.shift();
+                }else{
+                    //Stop the interval.
+                    clearInterval(typer);
+                }
+            },80)
+            
+
+            // chars.forEach(c=>{
+            //     el.innerHTML =   el.innerHTML + c;
+            // });
+
             currentScriptPosition++;
         }
 

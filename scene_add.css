@@ -5,7 +5,7 @@ body div.pane {
 }
 
 body div.pane {height:90%; width: 45%;}
-
+/*--- ---*/
 body {margin-top: 3% !important; padding: 2px;}
 
 div.pane {top: 3%;}
@@ -14,12 +14,12 @@ div.pane#right {left: 50%;}
 
 div.pane#left {transform: rotateY(10deg);}
 div.pane#right {transform: rotateY(-10deg);}
-
+/*--- ---*/
 
 div#left {
     background-color: skyblue;
 }
-
+/*--- ---*/
 div#grass {
     height: 35%;
     width: 100%;
@@ -30,7 +30,7 @@ div#grass {
     border-bottom-right-radius: 10px;
     z-index: 10;
 }
-
+/*--- ---*/
 div#sun_container {
     position: relative;
     top: 500px;
@@ -97,3 +97,12 @@ div#left {
 
 /*--- ---*/
 
+div#saucer {
+    animation: saucer_movement 8s ease-in-out;
+}
+
+/*--- ---*/
+
+div#saucer {
+    animation: saucer_shake 0.25s ease-in-out !important;
+}
