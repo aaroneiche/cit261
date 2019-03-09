@@ -9,6 +9,9 @@ body div.pane {
 }
 body div.pane {height:90%; width: 45%;}
 /*--- ---*/
+/*
+Resize, and split.
+*/
 body {margin-top: 3% !important; padding: 2px;}
 
 div.pane {top: 3%;}
@@ -18,7 +21,9 @@ div.pane#right {left: 50%;}
 div.pane#left {transform: rotateY(10deg);}
 div.pane#right {transform: rotateY(-10deg);}
 /*--- ---*/
-
+/*
+Add a sky
+*/
 div#left {
     background-color: skyblue;
 }

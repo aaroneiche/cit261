@@ -42,6 +42,11 @@
 
         var extraStyles = [];
         var letterArray = [];
+       
+        var arrayOfSentences = [];
+        var promiseArr = [];
+
+        var el = document.getElementById("right");
 
         document.addEventListener('DOMContentLoaded', e => {
             
@@ -50,6 +55,15 @@
             s = style.sheet;
             
             loadExtraStyles();
+
+            console.log(arrayOfSentences);
+
+            arrayOfSentences.forEach(sentence => {
+                console.log(sentence[0]);
+                promiseArr.push(typeSentence(sentence[0]));
+            });
+
+            Promise.all(promiseArr);
 
         });
 
@@ -78,6 +92,29 @@
             }
         }
 
+/* --------------------------------- */
+
+
+        //Returns a promise that will be fulfilled.
+        function typeSentence(line) {
+            return new Promise(done => {
+                chars = line.split("");
+                console.log(`fire: ${line}`)
+                var typer = setInterval(function(){
+                    if(chars.length > 0) {
+                        el.innerHTML = el.innerHTML + chars.shift();
+                    }else{
+                        //Stop the interval.
+                        clearInterval(typer);
+                        done();
+                    }
+                },80)
+
+            });
+        }
+
+
+/* --------------------------------- */
         function writeCode(script) {
             lines = script.split("\n");
             chars = lines[currentScriptPosition].split("");
@@ -109,7 +146,8 @@
                     //put the text in the styles array, we'll strip it on the other side.
                     var text = s.match(/\/*[\s\S]*\//gm,"");
                     if(text != null) {
-                        extraStyles.push(text);
+                        console.log(text);
+                        arrayOfSentences.push(text);
                     }
 
                     //Get rid of the text, so it doesn't get in the way.
