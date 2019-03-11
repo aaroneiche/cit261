@@ -44,28 +44,28 @@
         var letterArray = [];
        
         var arrayOfSentences = [];
-        var promiseArr = [];
+
+        var myMap = new Map();
+
 
         var el = document.getElementById("right");
 
-        document.addEventListener('DOMContentLoaded', e => {
+        document.addEventListener('DOMContentLoaded', async e => {
             
             style = document.createElement('style');
             document.head.appendChild(style);
             s = style.sheet;
-            
-            loadExtraStyles();
 
-            console.log(arrayOfSentences);
+            await loadExtraStyles();
 
-            arrayOfSentences.forEach(sentence => {
-                console.log(sentence[0]);
-                promiseArr.push(typeSentence(sentence[0]));
-            });
+            var terminal = document.getElementById("right");
 
-            Promise.all(promiseArr);
+            for (var [t, fun] of myMap.entries()) {
+                var result = await fun.apply(this, [t.split(""),terminal]);
+            }
 
         });
+
 
         function nextStep() {
             addNextClass(extraStyles[currentPosition]);
@@ -86,32 +86,30 @@
             currentPosition++;
         }
 
-        function typeLetter() {
-            if(letterArray.length > 0) {
-                var el = document.getElementById("right").innerHTML += letterArray.shift();
-            }
-        }
-
 /* --------------------------------- */
 
+async function typeChar(message,el){
 
-        //Returns a promise that will be fulfilled.
-        function typeSentence(line) {
-            return new Promise(done => {
-                chars = line.split("");
-                console.log(`fire: ${line}`)
-                var typer = setInterval(function(){
-                    if(chars.length > 0) {
-                        el.innerHTML = el.innerHTML + chars.shift();
-                    }else{
-                        //Stop the interval.
-                        clearInterval(typer);
-                        done();
-                    }
-                },80)
+    el.innerHTML = el.innerHTML + message.shift();
+    await delay(80);
+    // await new Promise(resolve=>{
+    //     setTimeout(function(){
+    //         resolve();
+    //     }, 80)
+    // })
 
-            });
-        }
+    if(message.length > 0) {
+        return typeChar(message,el);
+    }
+}
+
+async function delay(length) {
+    return await new Promise(resolve=>{
+        setTimeout(function(){
+            resolve();
+        }, length);
+    })
+}
 
 
 /* --------------------------------- */
@@ -146,8 +144,8 @@
                     //put the text in the styles array, we'll strip it on the other side.
                     var text = s.match(/\/*[\s\S]*\//gm,"");
                     if(text != null) {
-                        console.log(text);
-                        arrayOfSentences.push(text);
+                        myMap.set(text[0],typeChar);
+                        // arrayOfSentences.push(text[0]);
                     }
 
                     //Get rid of the text, so it doesn't get in the way.
