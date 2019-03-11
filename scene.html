@@ -42,16 +42,36 @@
 
         var extraStyles = [];
         var letterArray = [];
+       
+        var arrayOfSentences = [];
 
-        document.addEventListener('DOMContentLoaded', e => {
+        var myMap = new Map();
+
+
+        var el = document.getElementById("right");
+
+        document.addEventListener('DOMContentLoaded', async e => {
             
             style = document.createElement('style');
             document.head.appendChild(style);
             s = style.sheet;
+
+            await loadExtraStyles();
+
+            var terminal = document.getElementById("right");
+
+
+            /* 
+            The basis for the sequential CSS handling came from here:
+            https://hackernoon.com/asycn-await-bible-sequential-parallel-and-nest-4d1db7b8b95c
+            */
             
-            loadExtraStyles();
+            for (var [t, fun] of myMap.entries()) {
+                var result = await fun.apply(this, [t,terminal]);
+            }
 
         });
+
 
         function nextStep() {
             addNextClass(extraStyles[currentPosition]);
@@ -72,12 +92,28 @@
             currentPosition++;
         }
 
-        function typeLetter() {
-            if(letterArray.length > 0) {
-                var el = document.getElementById("right").innerHTML += letterArray.shift();
-            }
-        }
+/* --------------------------------- */
 
+async function typeChar(message,el){
+
+    el.innerHTML = el.innerHTML + message.shift();
+    await delay(80);
+
+    if(message.length > 0) {
+        return typeChar(message,el);
+    }
+}
+
+async function delay(length) {
+    return await new Promise(resolve=>{
+        setTimeout(function(){
+            resolve();
+        }, length);
+    })
+}
+
+
+/* --------------------------------- */
         function writeCode(script) {
             lines = script.split("\n");
             chars = lines[currentScriptPosition].split("");
@@ -104,12 +140,15 @@
 
                 //This represents a divide in 'steps' 
                 var sets = t.split("/*--- ---*/");
-
                 sets.forEach(s=>{
                     //put the text in the styles array, we'll strip it on the other side.
-                    var text = s.match(/\/*[\s\S]*\//gm,"");
+                    var text = s.match(/\/\*\s([\S\s]+)\s\*\//m,"");
+                    
                     if(text != null) {
-                        extraStyles.push(text);
+                        myMap.set(text[1].split(""),typeChar);
+                        // console.log(text[1].split(""));
+                        // arrayOfSentences.push(text[0]);
+                        myMap.set(1000,delay);
                     }
 
                     //Get rid of the text, so it doesn't get in the way.
@@ -123,7 +162,9 @@
                             rules[i] += "}";
                         }
                     })
-                    extraStyles.push(rules);                    
+                    myMap.set(rules,addNextClass);
+                    myMap.set(1000,delay);
+                    // extraStyles.push(rules);                    
                 })
               });  
             })
