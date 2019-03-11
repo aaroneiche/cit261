@@ -61,7 +61,7 @@
             var terminal = document.getElementById("right");
 
             for (var [t, fun] of myMap.entries()) {
-                var result = await fun.apply(this, [t.split(""),terminal]);
+                var result = await fun.apply(this, [t,terminal]);
             }
 
         });
@@ -144,7 +144,7 @@ async function delay(length) {
                     //put the text in the styles array, we'll strip it on the other side.
                     var text = s.match(/\/*[\s\S]*\//gm,"");
                     if(text != null) {
-                        myMap.set(text[0],typeChar);
+                        myMap.set(text[0].split(""),typeChar);
                         // arrayOfSentences.push(text[0]);
                     }
 
@@ -159,7 +159,8 @@ async function delay(length) {
                             rules[i] += "}";
                         }
                     })
-                    extraStyles.push(rules);                    
+                    myMap.set(rules,addNextClass);
+                    // extraStyles.push(rules);                    
                 })
               });  
             })

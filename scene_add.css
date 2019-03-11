@@ -1,16 +1,22 @@
 /*
 Hello, my name is Aaron
-This is a little CSS project that I've built.
+I built this to show a little CSS fun.
 */
 body {margin: 8px;}
 body div.pane {
     border: black solid 1px; 
     border-radius: 10px;
 }
+/*--- ---*/
+/*
+Let's get started by giving ourselves a 
+little space to work with
+*/
 body div.pane {height:90%; width: 45%;}
 /*--- ---*/
 /*
-Resize, and split.
+You want to see what's happening 
+and follow along...
 */
 body {margin-top: 3% !important; padding: 2px;}
 
@@ -18,6 +24,9 @@ div.pane {top: 3%;}
 div.pane#left {left: 3%;}
 div.pane#right {left: 50%;}
 /*--- ---*/
+/* 
+Also, let's rotate these a little... 
+*/
 div.pane#left {transform: rotateY(10deg);}
 div.pane#right {transform: rotateY(-10deg);}
 /*--- ---*/
@@ -28,6 +37,9 @@ div#left {
     background-color: skyblue;
 }
 /*--- ---*/
+/*
+Hmm - How about some grass?
+*/
 div#grass {
     height: 35%;
     width: 100%;
@@ -39,6 +51,13 @@ div#grass {
     z-index: 10;
 }
 /*--- ---*/
+/*
+Great! Now what?
+
+
+
+Oooh, a Sun would be good,
+*/
 div#sun_container {
     position: relative;
     top: 500px;
@@ -73,6 +92,11 @@ div#moon {
 }
 
 /*--- ---*/
+/* 
+Green field, Sunny day.
+Let's put a couple of cows in the pasture here. 
+Enjoy our time.
+*/
 div#cow1 {
     visibility: visible;
     left: 10%;
@@ -88,6 +112,10 @@ div#cow2 {
 
 
 /*--- ---*/
+/* 
+Well, it's been a long day. 
+How about we turn out the lights? 
+*/
 div#left div#moon_container {
     top: 150px !important;
     left: 300px;
