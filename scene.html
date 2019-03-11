@@ -140,12 +140,13 @@ async function delay(length) {
 
                 //This represents a divide in 'steps' 
                 var sets = t.split("/*--- ---*/");
-
                 sets.forEach(s=>{
                     //put the text in the styles array, we'll strip it on the other side.
-                    var text = s.match(/\/*[\s\S]*\//gm,"");
+                    var text = s.match(/\/\*\s([\S\s]+)\s\*\//m,"");
+                    
                     if(text != null) {
-                        myMap.set(text[0].split(""),typeChar);
+                        myMap.set(text[1].split(""),typeChar);
+                        // console.log(text[1].split(""));
                         // arrayOfSentences.push(text[0]);
                         myMap.set(1000,delay);
                     }
