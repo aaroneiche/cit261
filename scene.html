@@ -60,6 +60,12 @@
 
             var terminal = document.getElementById("right");
 
+
+            /* 
+            The basis for the sequential CSS handling came from here:
+            https://hackernoon.com/asycn-await-bible-sequential-parallel-and-nest-4d1db7b8b95c
+            */
+            
             for (var [t, fun] of myMap.entries()) {
                 var result = await fun.apply(this, [t,terminal]);
             }
@@ -92,11 +98,6 @@ async function typeChar(message,el){
 
     el.innerHTML = el.innerHTML + message.shift();
     await delay(80);
-    // await new Promise(resolve=>{
-    //     setTimeout(function(){
-    //         resolve();
-    //     }, 80)
-    // })
 
     if(message.length > 0) {
         return typeChar(message,el);
@@ -146,6 +147,7 @@ async function delay(length) {
                     if(text != null) {
                         myMap.set(text[0].split(""),typeChar);
                         // arrayOfSentences.push(text[0]);
+                        myMap.set(1000,delay);
                     }
 
                     //Get rid of the text, so it doesn't get in the way.
@@ -160,6 +162,7 @@ async function delay(length) {
                         }
                     })
                     myMap.set(rules,addNextClass);
+                    myMap.set(1000,delay);
                     // extraStyles.push(rules);                    
                 })
               });  
