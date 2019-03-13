@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="cards.css">
+</head>
+<body>
+    <div id="playfield" ondragover="return false;">
+
+        
+    </div>
+    <script>
+        
+        cardList = [];
+
+        class Card {
+            constructor(title,image){
+                this.title = title;
+                this.image = image;
+                this.flipped = false;
+                this.x = 0;
+                this.y = 0;
+                this.createCard();
+            }
+
+            createCard = () => {
+                this.DOMcard = document.createElement("div");
+                this.DOMcard.classList.add("card");
+                this.DOMcard.draggable = true;
+                this.DOMcard.style.backgroundImage = `url('${this.image}')`;
+
+
+                this.DOMcard.addEventListener("dragstart",e=>{
+
+                });
+
+                this.DOMcard.addEventListener("dragend",e=>{
+                    this.setPosition(e.clientX, e.clientY);
+                    // this.setPosition(e.target.offsetLeft, e.target.offsetTop);
+                });
+                
+                // let img = document.createElement("img");
+                // img.src = this.image;
+                // this.DOMcard.appendChild(img);
+
+                document.getElementById("playfield").appendChild(this.DOMcard);
+            }
+
+            flip = ()=>{
+                this.flipped = !this.flipped;
+            }
+
+            setPosition = (x,y)=>{
+                this.x = x;
+                this.y = y;
+                this.DOMcard.style.left = x + "px";
+                this.DOMcard.style.top = y + "px";
+                
+                console.log(this.DOMcard.style.top);
+            }
+
+        }
+
+        cardList.push(new Card("Jean Luc Picard","cards/jeanlucpicard.jpg"));
+        cardList.push(new Card("William Riker","cards/williamtriker.jpg"));
+        cardList.push(new Card("Major Rikal","cards/majorrakal.jpg"));
+
+        
+        // createCards = () => {
+        //     var field = document.getElementById("playfield");
+        // }
+
+    </script>
+</body>
+</html>
