@@ -12,12 +12,38 @@ html, body {
 }
 
 div.card {
-    height: 288px;
-    width: 200px;
+    height: 230px;
+    width: 161px;
     position: absolute;
+    box-sizing: content-box;
+    transform-style: preserve-3d;
+}
+
+div.card.flipped {
+    transform: rotateY(180deg);
+}
+
+div.card:hover::after {
+    background-color: red;
+    position: absolute;
+    height: 100%;
+    width: 100%; 
+
+}
+
+div.card img {
+    position: absolute;
+    height: inherit;
+    width:  inherit;
     border-color: black;
     border-radius: 10px;
     border-width: 5px;
     border-style: solid;
-    background-size: contain
+    box-sizing: border-box;
 }
+
+div.card img.back {
+    transform: rotateY(180deg);
+}
+
+

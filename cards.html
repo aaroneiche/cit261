@@ -8,6 +8,11 @@
     <link rel="stylesheet" type="text/css" media="screen" href="cards.css">
 </head>
 <body>
+    <div>Client X <span id="clientX"></span></div>
+    <div>Client Y <span id="clientY"></span></div>
+    <div>Card posX <span id="offsetX"></span></div>
+    <div>Card posY <span id="offsetY"></span></div>
+        
     <div id="playfield" ondragover="return false;">
 
         
@@ -30,22 +35,32 @@
                 this.DOMcard = document.createElement("div");
                 this.DOMcard.classList.add("card");
                 this.DOMcard.draggable = true;
-                this.DOMcard.style.backgroundImage = `url('${this.image}')`;
 
+                var img = document.createElement('img');
+                img.src = this.image;
 
                 this.DOMcard.addEventListener("dragstart",e=>{
-
+                    this.mouseOffsetX = e.target.offsetLeft - e.clientX;
+                    this.mouseOffsetY = e.target.offsetTop - e.clientY ;
                 });
 
                 this.DOMcard.addEventListener("dragend",e=>{
-                    this.setPosition(e.clientX, e.clientY);
-                    // this.setPosition(e.target.offsetLeft, e.target.offsetTop);
+                    document.querySelector("#offsetX").innerHTML = e.target.offsetTop;
+                    document.querySelector("#offsetY").innerHTML = e.target.offsetLeft;
+                    this.setPosition(e.clientX + this.mouseOffsetX, e.clientY + this.mouseOffsetY);
                 });
                 
-                // let img = document.createElement("img");
-                // img.src = this.image;
-                // this.DOMcard.appendChild(img);
+                let cardImage = document.createElement("img");
+                cardImage.draggable = false;
+                cardImage.src = this.image;
+                
+                let cardBack = document.createElement("img");
+                cardBack.draggable = false;
+                cardBack.classList.add("back");
+                cardBack.src = "cards/cardback.jpg";
 
+                this.DOMcard.appendChild(cardBack);
+                this.DOMcard.appendChild(cardImage);
                 document.getElementById("playfield").appendChild(this.DOMcard);
             }
 
@@ -58,17 +73,24 @@
                 this.y = y;
                 this.DOMcard.style.left = x + "px";
                 this.DOMcard.style.top = y + "px";
-                
-                console.log(this.DOMcard.style.top);
             }
+        
+            checkOverlap = (el,el2) => {
 
+            }
+        
         }
 
         cardList.push(new Card("Jean Luc Picard","cards/jeanlucpicard.jpg"));
         cardList.push(new Card("William Riker","cards/williamtriker.jpg"));
         cardList.push(new Card("Major Rikal","cards/majorrakal.jpg"));
-
         
+        document.addEventListener('DOMContentLoaded',e=>{
+            document.addEventListener("mousemove", e=>{
+                document.querySelector("#clientX").innerHTML = e.clientX;
+                document.querySelector("#clientY").innerHTML = e.clientY;
+            });
+        });
         // createCards = () => {
         //     var field = document.getElementById("playfield");
         // }
