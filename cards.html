@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,22 +8,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="cards.css">
 </head>
+
 <body>
     <div>Client X <span id="clientX"></span></div>
     <div>Client Y <span id="clientY"></span></div>
     <div>Card posX <span id="offsetX"></span></div>
     <div>Card posY <span id="offsetY"></span></div>
-        
-    <div id="playfield" ondragover="return false;">
 
-        
+    <div id="playfield" ondragover="return false;">
+        <div class="guide"></div>
+
     </div>
     <script>
-        
+
         cardList = [];
 
         class Card {
-            constructor(title,image){
+            constructor(title, image) {
                 this.title = title;
                 this.image = image;
                 this.flipped = false;
@@ -39,21 +41,49 @@
                 var img = document.createElement('img');
                 img.src = this.image;
 
-                this.DOMcard.addEventListener("dragstart",e=>{
+                this.DOMcard.addEventListener("dragstart", e => {
                     this.mouseOffsetX = e.target.offsetLeft - e.clientX;
-                    this.mouseOffsetY = e.target.offsetTop - e.clientY ;
+                    this.mouseOffsetY = e.target.offsetTop - e.clientY;
+                    
                 });
 
-                this.DOMcard.addEventListener("dragend",e=>{
+                this.DOMcard.addEventListener("drag", e => {
+                    var a = this.checkAlign(e);
+                    if(a) {
+                        let guide = document.querySelector("div.guide");
+                        guide.style.top = a.y + "px";
+                        document.querySelector("div.guide").style.visibility = "visible"
+                    }else{
+                        document.querySelector("div.guide").style.visibility = "hidden"
+                    }
+                });
+
+                this.DOMcard.addEventListener("dragend", e => {
                     document.querySelector("#offsetX").innerHTML = e.target.offsetTop;
                     document.querySelector("#offsetY").innerHTML = e.target.offsetLeft;
-                    this.setPosition(e.clientX + this.mouseOffsetX, e.clientY + this.mouseOffsetY);
+
+                    var a = this.checkAlign(e);
+                    console.log(a);
+
+                    if(a != undefined){
+                        this.setPosition(e.clientX + this.mouseOffsetX, a.y);
+                    }else{
+                        this.setPosition(e.clientX + this.mouseOffsetX, e.clientY + this.mouseOffsetY);
+                    }
+
+                    // this.setPosition(e.clientX + this.mouseOffsetX, e.clientY + this.mouseOffsetY);
+                    document.querySelector("div.guide").style.visibility = "hidden"
                 });
-                
+
+                this.DOMcard.addEventListener("dblclick", e => {
+                    console.log("Hi");
+                    this.flip();
+                })
+
                 let cardImage = document.createElement("img");
                 cardImage.draggable = false;
                 cardImage.src = this.image;
-                
+
                 let cardBack = document.createElement("img");
                 cardBack.draggable = false;
                 cardBack.classList.add("back");
@@ -64,37 +94,43 @@
                 document.getElementById("playfield").appendChild(this.DOMcard);
             }
 
-            flip = ()=>{
+            flip = () => {
                 this.flipped = !this.flipped;
+                this.DOMcard.classList.toggle("flipped");
             }
 
-            setPosition = (x,y)=>{
+            setPosition = (x, y) => {
                 this.x = x;
                 this.y = y;
                 this.DOMcard.style.left = x + "px";
                 this.DOMcard.style.top = y + "px";
             }
-        
-            checkOverlap = (el,el2) => {
 
+            /* 
+                returns an object with the closest x,y;
+            */
+            checkAlign = (event) => {
+                var myCardY = event.clientY + this.mouseOffsetY;
+
+                return cardList.find((el,i,a)=>{    
+                    return (myCardY <= el.y + 10 && myCardY >= el.y - 10 && this != el);
+                })
             }
-        
         }
 
-        cardList.push(new Card("Jean Luc Picard","cards/jeanlucpicard.jpg"));
-        cardList.push(new Card("William Riker","cards/williamtriker.jpg"));
-        cardList.push(new Card("Major Rikal","cards/majorrakal.jpg"));
-        
-        document.addEventListener('DOMContentLoaded',e=>{
-            document.addEventListener("mousemove", e=>{
+        cardList.push(new Card("Jean Luc Picard", "cards/jeanlucpicard.jpg"));
+        cardList.push(new Card("William Riker", "cards/williamtriker.jpg"));
+        cardList.push(new Card("Major Rikal", "cards/majorrakal.jpg"));
+
+        document.addEventListener('DOMContentLoaded', e => {
+            document.addEventListener("mousemove", e => {
                 document.querySelector("#clientX").innerHTML = e.clientX;
                 document.querySelector("#clientY").innerHTML = e.clientY;
             });
         });
-        // createCards = () => {
-        //     var field = document.getElementById("playfield");
-        // }
+
 
     </script>
 </body>
+
 </html>

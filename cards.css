@@ -21,14 +21,14 @@ div.card {
 
 div.card.flipped {
     transform: rotateY(180deg);
+    transition-property: transform;
+    transition-duration: 500ms;
 }
 
-div.card:hover::after {
-    background-color: red;
-    position: absolute;
-    height: 100%;
-    width: 100%; 
-
+div.card:not(.flipped) {
+    transform: rotateY(0deg);
+    transition-property: transform;
+    transition-duration: 500ms;
 }
 
 div.card img {
@@ -46,4 +46,9 @@ div.card img.back {
     transform: rotateY(180deg);
 }
 
-
+div.guide {
+    position: absolute;
+    visibility: hidden;
+    width: 100%;
+    border-top: solid 1px red;
+}
