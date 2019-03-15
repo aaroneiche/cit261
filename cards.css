@@ -12,8 +12,8 @@ html, body {
 }
 
 div.card {
-    height: 230px;
-    width: 161px;
+    height: 200px;
+    width: 140px;
     position: absolute;
     box-sizing: content-box;
     transform-style: preserve-3d;
