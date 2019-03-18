@@ -61,11 +61,8 @@
         </div>
     </div>
     <div id="photo">
-        <img id="roverPhoto" src="" alt="">
-        
-        <!-- <div id="imageContainer">    
-            <img id="photoLoader" src="marsspinning.gif" alt="" height=30 width=30>
-        </div>    -->
+        <!-- <img id="roverPhoto" src="" alt=""> -->
+        <div id="roverPhoto"></div>
     </div>
     <script>
     
@@ -88,9 +85,6 @@
                     getRoverDetails(r.target.id);
                 });
             })
-
-            
-
         });
 
         function toggleCard() {
@@ -193,11 +187,17 @@
         }
     
         function showPicture(imageUrl) {
-            let img = document.querySelector("#photo img");
-            img.setAttribute("src",imageUrl);
-            document.querySelector("#photo").style.visibility = "visible";
-
-
+            // let img = document.querySelector("#photo img");
+            // img.setAttribute("src",imageUrl);
+            // document.querySelector("#photo").style.visibility = "visible";
+            
+            var img = new Image();
+            img.src = imageUrl;
+            
+            img.onload = e => {
+                let val = img.toDataURL("image/jpeg");
+                document.querySelector("#photo").style.backgroundImage = val;
+            }            
         }
     </script>
 
