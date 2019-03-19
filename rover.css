@@ -116,6 +116,11 @@ div#loader img {
     margin-top: 20px;
     margin-left: 10px;
     margin-right: 10px;
+    color: white;
+}
+
+#introduction a{
+    color: yellow;
 }
 
 div.title_bar {
