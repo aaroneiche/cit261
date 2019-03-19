@@ -61,8 +61,7 @@
         </div>
     </div>
     <div id="photo">
-        <!-- <img id="roverPhoto" src="" alt=""> -->
-        <div id="roverPhoto"></div>
+        <img id="roverPhoto" src="" alt="">
     </div>
     <script>
     
@@ -74,7 +73,7 @@
 
             document.querySelector("#photo").addEventListener("click",e=>{
                 document.querySelector("#photo").style.visibility = "hidden";
-                document.querySelector("#photo img").src = "";
+                document.querySelector("#roverPhoto").classList.remove("image_load");
             })
 
             var rovers = document.querySelectorAll(".rover");
@@ -150,6 +149,7 @@
                     toggleCard();
                     // document.querySelector(".rover div.loader").classList.remove("show");
                     document.querySelector("#rovers.front div#loader").style.visibility = "hidden";
+                    document.querySelector("#roverPhoto").classList.remove("image_load");
                 }else{
                     //probably an error - possibly a 3xx status code.
                     alert("Error communicating with NASA");
@@ -187,17 +187,14 @@
         }
     
         function showPicture(imageUrl) {
-            // let img = document.querySelector("#photo img");
-            // img.setAttribute("src",imageUrl);
-            // document.querySelector("#photo").style.visibility = "visible";
-            
-            var img = new Image();
+            var img = document.getElementById("roverPhoto");
             img.src = imageUrl;
-            
             img.onload = e => {
-                let val = img.toDataURL("image/jpeg");
-                document.querySelector("#photo").style.backgroundImage = val;
-            }            
+                // document.querySelector("#roverPhoto").style.backgroundImage = `url(${imageUrl})`;
+                document.querySelector("#photo").style.visibility = "visible";
+                img.classList.add("image_load");
+
+            }
         }
     </script>
 

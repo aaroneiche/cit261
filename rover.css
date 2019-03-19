@@ -205,26 +205,30 @@ span#back_button {
     visibility: hidden;
 }
 
-#photo img {
-    max-width: 80%;
+#roverPhoto {
     max-height: 80%;
-    
-    animation: image_load 1s 
+    max-width: 80%;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: solid 3px white;
+    border-radius: 10px;
 }
+
+.image_load {
+    animation: image_load 0.25s ease-out;
+}
+
 
 @keyframes image_load{
     0% {
-        max-width: 0%;
-        max-height: 0%;
+        transform: scaleX(0.01) scaleY(0.01);
     }
 
     50% {
-        max-width: 80%;
-        max-height: 0%;
+        transform: scaleX(1) scaleY(0.01);
     }
 
     100% {
-        max-width: 80%;
-        max-height: 80%;
+        transform: scale(1) scale(1);
     }
 }
