@@ -29,6 +29,8 @@
                     to view images taken by these robots.
                     Click on a Rover above for more information and to browse images.
                     Please note that the Curiosity rover has a LOT of data, it will take some time to load.
+                    <br/>Currently getting Sol <input id="sol_select" type="text" size="2" class="disabled" value="500" />
+                    
                 </div>
             </div>
             <div id="rover_details" class="face back">
@@ -67,7 +69,6 @@
     
         var data = {};
         let rover = "curiosity"; //Set a default
-
         //Handle on page load.
         document.addEventListener('DOMContentLoaded',e=>{
 
@@ -75,6 +76,17 @@
                 document.querySelector("#photo").style.visibility = "hidden";
                 document.querySelector("#roverPhoto").classList.remove("image_load");
             })
+
+            document.querySelector("#introduction input").addEventListener("click",e=>{
+                e.target.classList.remove("disabled");
+            })
+
+            document.querySelector("#introduction input").addEventListener("blur",e=>{
+
+                e.target.classList.add("disabled");
+            })
+
+
 
             var rovers = document.querySelectorAll(".rover");
             
@@ -126,8 +138,10 @@
             Normally API keys are secret. Fortuantely, NASA hands these out freely. If you want your own key, please go get one:
             at https://api.nasa.gov/index.html#apply-for-an-api-key 
             */
-            var nak = `kxaDQyDbQNFu6BqiblPVt0ojjqa8J4ZGJB4UUWyJ`;
-            var url = "https://api.nasa.gov/mars-photos/api/v1/rovers/" + rover + "/photos?sol=1000&api_key=" + nak;
+            var nak = "kxaDQyDbQNFu6BqiblPVt0ojjqa8J4ZGJB4UUWyJ";
+            // var url = "https://api.nasa.gov/mars-photos/api/v1/rovers/" + rover + "/photos?sol=1000&api_key=" + nak;
+            var sol = document.getElementById("sol_select").value;
+            var url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=${sol}&api_key=${nak}`;
 
             //Create an XMLHttpRequest.
             var r = new XMLHttpRequest();

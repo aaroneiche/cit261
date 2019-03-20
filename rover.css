@@ -123,6 +123,27 @@ div#loader img {
     color: yellow;
 }
 
+#introduction input {
+    border: none;
+    display: inline;
+    font-family: inherit;
+    font-size: inherit;
+    padding: none;
+    background-color: inherit;
+}
+
+#introduction input.disabled {
+    background-color: inherit;
+    color: firebrick;
+    user-select: none;
+    cursor: pointer;
+}
+
+#introduction input {
+    background-color: white;
+    color: firebrick;
+}
+
 div.title_bar {
     display: flex;
     flex-grow: 1;
