@@ -89,21 +89,9 @@
 
             document.addEventListener("keydown",e => {
                 if(e.code == "ArrowLeft") {
-                    let c = document.getElementById("pictures").selectedIndex;
-                    if(c > 0) {
-                        let src = document.querySelectorAll("#pictures option")[c - 1].getAttribute("data-img");
-                        document.getElementById("roverPhoto").src = src;
-                        document.getElementById("pictures").selectedIndex = c - 1;
-                    }
+                    prevImage();
                 } else if (e.code == "ArrowRight"){
-                    let ops = document.querySelectorAll("#pictures option");
-                    let c = document.getElementById("pictures").selectedIndex;
-
-                    if(c < ops.length) {
-                        let src = document.querySelectorAll("#pictures option")[c + 1].getAttribute("data-img");
-                        document.getElementById("roverPhoto").src = src;
-                        document.getElementById("pictures").selectedIndex = c + 1;
-                    }
+                    nextImage();
                 }
             })
 
@@ -116,6 +104,26 @@
                 });
             })
         });
+
+        function nextImage() {
+            let ops = document.querySelectorAll("#pictures option");
+            let c = document.getElementById("pictures").selectedIndex;
+
+            if(c < ops.length) {
+                let src = document.querySelectorAll("#pictures option")[c + 1].getAttribute("data-img");
+                document.getElementById("roverPhoto").src = src;
+                document.getElementById("pictures").selectedIndex = c + 1;
+            }
+        }
+
+        function prevImage() {
+            let c = document.getElementById("pictures").selectedIndex;
+            if(c > 0) {
+                let src = document.querySelectorAll("#pictures option")[c - 1].getAttribute("data-img");
+                document.getElementById("roverPhoto").src = src;
+                document.getElementById("pictures").selectedIndex = c - 1;
+            }
+        }
 
         function toggleCard() {
             document.getElementById("card").classList.toggle("flipped");
