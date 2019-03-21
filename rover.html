@@ -63,6 +63,11 @@
         </div>
     </div>
     <div id="photo" class="hidden">
+        <div id="photo_details">
+            ID: <span id="photo_id"></span>
+            Date: <span id="photo_date"></span>
+            Camera: <span id="photo_camera"></span>
+        </div>
         <img id="roverPhoto" src="" alt="">
     </div>
     <script>
@@ -73,7 +78,7 @@
         document.addEventListener('DOMContentLoaded',e=>{
 
             document.querySelector("#photo").addEventListener("click",e=>{
-                document.querySelector("#photo").style.visibility = "hidden";
+                document.querySelector("#photo").classList.add("hidden");
                 document.querySelector("#roverPhoto").classList.remove("image_load");
             })
 
@@ -111,9 +116,13 @@
             let ops = document.querySelectorAll("#pictures option");
             let c = document.getElementById("pictures").selectedIndex;
 
-            if(c < ops.length) {
-                let src = document.querySelectorAll("#pictures option")[c + 1].getAttribute("data-img");
-                document.getElementById("roverPhoto").src = src;
+            if(c < ops.length - 1) {
+                let src = document.querySelectorAll("#pictures option")[c + 1];
+                let details = getInfoFromElement(src);
+
+                document.getElementById("roverPhoto").src = details.img;
+                setPhotoDetails(details.id, details.date, details.cam);
+
                 document.getElementById("pictures").selectedIndex = c + 1;
             }
         }
@@ -121,10 +130,29 @@
         function prevImage() {
             let c = document.getElementById("pictures").selectedIndex;
             if(c > 0) {
-                let src = document.querySelectorAll("#pictures option")[c - 1].getAttribute("data-img");
-                document.getElementById("roverPhoto").src = src;
+                let src = document.querySelectorAll("#pictures option")[c - 1];
+                let details = getInfoFromElement(src);
+
+                document.getElementById("roverPhoto").src = details.img;
+                setPhotoDetails(details.id, details.date, details.cam);
+
                 document.getElementById("pictures").selectedIndex = c - 1;
             }
+        }
+
+        function getInfoFromElement(element) {
+            return {
+                "img": element.getAttribute("data-img"),
+                "id": element.getAttribute("data-id"),
+                "date": element.getAttribute("data-date"),
+                "cam": element.getAttribute("data-cam")
+            }
+        }
+
+        function setPhotoDetails(id, date, camera) {
+            document.getElementById("photo_id").innerHTML = id;
+            document.getElementById("photo_date").innerHTML = date;
+            document.getElementById("photo_camera").innerHTML = camera;
         }
 
         function toggleCard() {
@@ -219,8 +247,14 @@
                     let op = document.createElement("option");
                     op.innerHTML = `ID:${p.id} Date:${p.earth_date} Cam:${p.camera.name}`
                     op.setAttribute("data-img",p.img_src);
+                    op.setAttribute("data-id",p.id);
+                    op.setAttribute("data-date",p.earth_date);
+                    op.setAttribute("data-cam",p.camera.full_name);
                     op.addEventListener("click", e=>{
-                        showPicture(e.target.getAttribute("data-img"));
+
+                        let details = getInfoFromElement(e.target);
+                        setPhotoDetails(details.id, details.date, details.cam);
+                        showPicture(details.img);
                     })
                     document.querySelector("#pictures").appendChild(op);
                 });

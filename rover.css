@@ -4,6 +4,7 @@ body {
     align-items: center;
     font-family: Arial, Helvetica, sans-serif;
     background-image: url("rover/mars_background.jpg");
+    margin: 0;
 }
 
 #container {
@@ -230,10 +231,9 @@ span#current_sol {
     position: absolute;
     height: 100%;
     width: 100%;
-    top: -5px;
     background-color: rgba(0,0,0,0.7);
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     visibility: visible;
@@ -243,19 +243,31 @@ span#current_sol {
     visibility: hidden;
 }
 
+#photo #photo_details {
+    margin-bottom: 10px;
+    padding: 5px 10px 5px 10px;
+    color: firebrick;
+    background-color: rgba(0, 0, 0, 0.75);
+}
 
+#photo_details span{
+    color: white
+}
 
 #roverPhoto {
     max-height: 80%;
     max-width: 80%;
-    background-position: center;
-    background-repeat: no-repeat;
     border: solid 3px white;
     border-radius: 10px;
 }
 
 .image_load {
     animation: image_load 0.25s ease-out;
+}
+
+#photo div {
+    border: solid 2px white;
+    border-radius: 10px;
 }
 
 
