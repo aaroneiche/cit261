@@ -236,8 +236,14 @@ span#current_sol {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    visibility: visible;
+}
+
+#photo.hidden {
     visibility: hidden;
 }
+
+
 
 #roverPhoto {
     max-height: 80%;

@@ -62,7 +62,7 @@
             </div>
         </div>
     </div>
-    <div id="photo">
+    <div id="photo" class="hidden">
         <img id="roverPhoto" src="" alt="">
     </div>
     <script>
@@ -92,6 +92,8 @@
                     prevImage();
                 } else if (e.code == "ArrowRight"){
                     nextImage();
+                }else if (e.keyCode == 27){
+                    document.getElementById("photo").classList.add("hidden");
                 }
             })
 
@@ -233,8 +235,7 @@
             var img = document.getElementById("roverPhoto");
             img.src = imageUrl;
             img.onload = e => {
-                // document.querySelector("#roverPhoto").style.backgroundImage = `url(${imageUrl})`;
-                document.querySelector("#photo").style.visibility = "visible";
+                document.getElementById("photo").classList.remove("hidden");
                 img.classList.add("image_load");
 
             }
