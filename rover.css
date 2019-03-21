@@ -168,6 +168,14 @@ span#back_button {
     cursor: pointer;
 }
 
+span#current_sol {
+    position: absolute;
+    right: 4px;
+    top: 8px;
+    color: white;
+}
+
+
 #rover_details #layout{
     display: flex;
     flex-direction: row;

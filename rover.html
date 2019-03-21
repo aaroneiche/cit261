@@ -37,7 +37,7 @@
                 <div class="title_bar">
                     <span id="back_button" onclick="toggleCard()">Back</span>
                     <span id="title"></span>
-                    
+                    <span id="current_sol"></span>
                 </div>
                 <div id="layout">
                     <div id="rover_info">
@@ -87,7 +87,25 @@
                 e.target.classList.add("disabled");
             })
 
+            document.addEventListener("keydown",e => {
+                if(e.code == "ArrowLeft") {
+                    let c = document.getElementById("pictures").selectedIndex;
+                    if(c > 0) {
+                        let src = document.querySelectorAll("#pictures option")[c - 1].getAttribute("data-img");
+                        document.getElementById("roverPhoto").src = src;
+                        document.getElementById("pictures").selectedIndex = c - 1;
+                    }
+                } else if (e.code == "ArrowRight"){
+                    let ops = document.querySelectorAll("#pictures option");
+                    let c = document.getElementById("pictures").selectedIndex;
 
+                    if(c < ops.length) {
+                        let src = document.querySelectorAll("#pictures option")[c + 1].getAttribute("data-img");
+                        document.getElementById("roverPhoto").src = src;
+                        document.getElementById("pictures").selectedIndex = c + 1;
+                    }
+                }
+            })
 
             var rovers = document.querySelectorAll(".rover");
             
@@ -107,6 +125,8 @@
 
             rover = data.photos[0].rover;
             document.querySelector("#pictures").innerHTML = "";
+            let sol = document.querySelector("#introduction input").value;
+            document.querySelector("span#current_sol").innerHTML = `Sol: ${sol}`;
 
             document.querySelector("#rover_details span#title").innerHTML = rover.name;
             
