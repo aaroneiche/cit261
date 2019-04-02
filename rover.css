@@ -99,7 +99,7 @@ body {
     display: flex;
     justify-content: center;
     opacity: 0;
-    transition: 0.5s opacity ease-in;
+    transition: 0.25s opacity ease-in;
     visibility: hidden;
 }
 
