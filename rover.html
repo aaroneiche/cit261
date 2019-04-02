@@ -211,6 +211,7 @@
             document.querySelector("#loader").style.left = document.querySelector("#" + rover).offsetLeft + "px";
             document.querySelector("#loader").style.top = document.querySelector("#" + rover).offsetTop + "px";
             document.querySelector("#loader").style.visibility = "visible";
+            document.querySelector("#loader").style.opacity = "1";
 
             //ES2015 approach. You could easily do:
             // r.onload = function (){ ...
@@ -222,6 +223,7 @@
                     toggleCard();
                     // document.querySelector(".rover div.loader").classList.remove("show");
                     document.querySelector("#rovers.front div#loader").style.visibility = "hidden";
+                    document.querySelector("#rovers.front div#loader").style.opacity = "0";
                     document.querySelector("#roverPhoto").classList.remove("image_load");
                 }else{
                     //probably an error - possibly a 3xx status code.
