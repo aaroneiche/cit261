@@ -62,7 +62,7 @@ body {
 
 .rover {
     /* position: relative; */
-    border: 1px solid black;
+    border: 2px solid black;
     width: 200px;
     height: 200px;
     margin-left: 3px;
@@ -77,8 +77,8 @@ body {
 } 
 
 .rover:hover {
-    border-color: firebrick;
-}
+    border-color: maroon;
+} 
 
 /* Title */
 .rover:after {
