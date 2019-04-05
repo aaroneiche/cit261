@@ -73,7 +73,12 @@ body {
     align-items: flex-end;
     background-size: cover;
     cursor: pointer;
+    transition: border-color 0.25s ease-in-out;
 } 
+
+.rover:hover {
+    border-color: firebrick;
+}
 
 /* Title */
 .rover:after {
