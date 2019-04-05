@@ -13,6 +13,30 @@ body {
     width: 625px;
 }
 
+#errorPanel {
+    position: absolute;
+    top: -300px;
+    z-index: 10;
+    padding-top: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: white; 
+    border-radius: 10px;
+    border: 2px black solid;
+    transition: top 0.5s ease-in-out;
+    
+}
+
+#errorPanel div {
+    padding-bottom: 10px;
+    width: 200px;
+}
+
+#errorPanel.show {
+    top: 200px;
+    transition: top 0.5s ease-in-out;
+}
+
 
 #card {
     position: relative;

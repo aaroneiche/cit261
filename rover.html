@@ -10,6 +10,11 @@
 <body>
     <h1>Rover Photo Explorer</h1>
 
+    <div id="errorPanel">
+        <img src="spirit2.png" alt="">
+        <div>This is the error message.</div>
+    </div>
+
     <!-- Generic Container -->
     <div id="container">
         <div id="card" class="">
@@ -86,6 +91,11 @@
                 e.target.select();
                 e.target.classList.remove("disabled");
             })
+
+            document.querySelector("#errorPanel").addEventListener("click", e=>{
+                e.target.closest("#errorPanel").classList.remove("show");
+            })
+
 
             document.querySelector("#introduction input").addEventListener("blur",e=>{
 
@@ -218,16 +228,23 @@
             r.onload = () => {
                 if(r.status == 200) {
                     data = JSON.parse(r.responseText);
+
+                    if(data.photos.length === 0) {
+                        showError(`No photos for ${rover} for ${sol}`);
+                        clearLoading();
+
+                        return;
+                    }
+
                     // return new Promise().resolve(r.responseText);
                     displayRoverDetails();
                     toggleCard();
-                    // document.querySelector(".rover div.loader").classList.remove("show");
-                    document.querySelector("#rovers.front div#loader").style.visibility = "hidden";
-                    document.querySelector("#rovers.front div#loader").style.opacity = "0";
-                    document.querySelector("#roverPhoto").classList.remove("image_load");
+  
+                    clearLoading();
+
                 }else{
                     //probably an error - possibly a 3xx status code.
-                    alert("Error communicating with NASA");
+                    showError("Error communicating with NASA");
                 }
             }
             r.send();
@@ -276,6 +293,22 @@
 
             }
         }
+
+        function setLoading() {
+            document.querySelector("#rovers.front div#loader").style.visibility = "visible";
+            document.querySelector("#rovers.front div#loader").style.opacity = "1";
+        }
+
+        function clearLoading() {
+            document.querySelector("#rovers.front div#loader").style.visibility = "hidden";
+            document.querySelector("#rovers.front div#loader").style.opacity = "0";
+        }
+    
+        function showError(errorMessage) {
+            document.querySelector("#errorPanel div").innerHTML = errorMessage;
+            document.querySelector("#errorPanel").classList.add("show");
+        }
+    
     </script>
 
 </body>
