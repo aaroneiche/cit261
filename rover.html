@@ -11,7 +11,7 @@
     <h1>Rover Photo Explorer</h1>
 
     <div id="errorPanel">
-        <img src="spirit2.png" alt="">
+        <img src="spirit.png" alt="">
         <div>This is the error message.</div>
     </div>
 
@@ -29,7 +29,7 @@
                 <div id="introduction">
                     Did you know that Mars is a planet populated entirely by robots? It's true.
                     Humanity has been sending robotic probes to Mars since 1975 with the Viking 1. 
-                    In the last couple of decades we've put a few rovers - mobile science labs -
+                    In the last couple of decades we've put a few <em>mobile science labs</em>
                     on the red planet. NASA has kindly <a href="https://api.nasa.gov/api.html" target="_blank">provided an API</a>
                     to view images taken by these robots.
                     Click on a Rover above for more information and to browse images.
@@ -230,7 +230,7 @@
                     data = JSON.parse(r.responseText);
 
                     if(data.photos.length === 0) {
-                        showError(`No photos for ${rover} for ${sol}`);
+                        showError(`No photos for ${rover} on sol ${sol}`);
                         clearLoading();
 
                         return;
@@ -239,7 +239,7 @@
                     // return new Promise().resolve(r.responseText);
                     displayRoverDetails();
                     toggleCard();
-  
+                    listImages("all");
                     clearLoading();
 
                 }else{
