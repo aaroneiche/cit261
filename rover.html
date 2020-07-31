@@ -183,6 +183,8 @@
             document.querySelector("td#status").innerHTML = rover.status;
             document.querySelector("td#total_photos").innerHTML = rover.total_photos;
 
+            if(!rover.cameras) rover.cameras = [];
+
             rover.cameras.push({"name":"all", "full_name":"All Cameras"});
 
             //Clear the camera list.
