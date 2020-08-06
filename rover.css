@@ -292,6 +292,13 @@ span#current_sol {
     border-radius: 10px;
 }
 
+#photo #photo_instructions {
+    margin-top: 10px;
+    padding: 5px 10px 5px 10px;
+    color: firebrick;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
 .image_load {
     animation: image_load 0.25s ease-out;
 }
