@@ -79,6 +79,14 @@
     
         var data = {};
         let rover = "curiosity"; //Set a default
+
+        /*
+        Normally API keys are secret. Fortuantely, NASA hands these out freely. If you want your own key, please go get one:
+        at https://api.nasa.gov/index.html#apply-for-an-api-key 
+        */
+        var nak = "kxaDQyDbQNFu6BqiblPVt0ojjqa8J4ZGJB4UUWyJ";
+
+
         //Handle on page load.
         document.addEventListener('DOMContentLoaded',e=>{
 
@@ -116,8 +124,7 @@
             
             rovers.forEach(e=>{
                 e.addEventListener("click",r=>{
-                    // toggleCard();
-                    getRoverDetails(r.target.id);
+                    getRoverSummary(r.target.id);
                 });
             })
         });
@@ -169,9 +176,9 @@
             document.getElementById("card").classList.toggle("flipped");
         }
 
-        function displayRoverDetails() {
+        function displayRoverDetails(rover) {
 
-            rover = data.photos[0].rover;
+            
             document.querySelector("#pictures").innerHTML = "";
             let sol = document.querySelector("#introduction input").value;
             document.querySelector("span#current_sol").innerHTML = `Sol: ${sol}`;
@@ -183,16 +190,19 @@
             document.querySelector("td#status").innerHTML = rover.status;
             document.querySelector("td#total_photos").innerHTML = rover.total_photos;
 
-            if(!rover.cameras) rover.cameras = [];
+            // if(!rover.cameras) rover.cameras = [];
+            let solData = rover.photos.filter(s=> s.sol == sol);
+            rover.cameras = solData[0].cameras;
 
-            rover.cameras.push({"name":"all", "full_name":"All Cameras"});
+            // rover.cameras.push({"name":"all", "full_name":"All Cameras"});
+            rover.cameras.push("ALL");
 
             //Clear the camera list.
             document.querySelector("td#camera_list").innerHTML = "";
             rover.cameras.forEach(c=>{
                 let cam = document.createElement("li");
-                cam.setAttribute("data-cam",c.name);
-                cam.innerHTML = c.full_name;
+                cam.setAttribute("data-cam",c);
+                cam.innerHTML = c;
                 
                 cam.addEventListener("click", ev => {
                     listImages(ev.target.getAttribute("data-cam"));
@@ -202,14 +212,45 @@
             })
         }
 
+        function getRoverSummary(rover) {
+            var roverUrl = `https://api.nasa.gov/mars-photos/api/v1/manifests/${rover}?api_key=${nak}`;
+            var r = new XMLHttpRequest();
+            r.open("GET", roverUrl);
+
+            document.querySelector("#loader").style.left = document.querySelector("#" + rover).offsetLeft + "px";
+            document.querySelector("#loader").style.top = document.querySelector("#" + rover).offsetTop + "px";
+            document.querySelector("#loader").style.visibility = "visible";
+            document.querySelector("#loader").style.opacity = "1";
+
+            r.onload = () => {
+                if(r.status == 200) {
+                    data = JSON.parse(r.responseText);
+                    var sol = document.getElementById("sol_select").value;                 
+                    let photosForSol = data.photo_manifest.photos.filter(s=> s.sol == sol);
+
+                    if(photosForSol.length == 0) {                       
+                        showError(`No photos for ${rover} on sol ${sol}`);
+                        clearLoading();
+                        return;
+                    }
+
+                    displayRoverDetails(data.photo_manifest);
+                    toggleCard();
+                    getRoverDetails(rover);
+                    clearLoading();
+
+                    
+
+                    console.log(data);
+                }else{
+                    showError("Error communicating with NASA");
+                }
+            }
+            r.send();
+        }
 
         function getRoverDetails(rover) {
             
-            /*
-            Normally API keys are secret. Fortuantely, NASA hands these out freely. If you want your own key, please go get one:
-            at https://api.nasa.gov/index.html#apply-for-an-api-key 
-            */
-            var nak = "kxaDQyDbQNFu6BqiblPVt0ojjqa8J4ZGJB4UUWyJ";
             // var url = "https://api.nasa.gov/mars-photos/api/v1/rovers/" + rover + "/photos?sol=1000&api_key=" + nak;
             var sol = document.getElementById("sol_select").value;
             var url = `https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=${sol}&api_key=${nak}`;
@@ -237,13 +278,7 @@
 
                         return;
                     }
-
-                    // return new Promise().resolve(r.responseText);
-                    displayRoverDetails();
-                    toggleCard();
-                    listImages("all");
-                    clearLoading();
-
+                    listImages("ALL");
                 }else{
                     //probably an error - possibly a 3xx status code.
                     showError("Error communicating with NASA");
@@ -254,7 +289,7 @@
     
         function listImages(camera) {
             let photoSet = data.photos.filter(p=>{
-                if(camera == "all"){
+                if(camera == "ALL"){
                     return true;
                 }else{
                     return p.camera.name == camera;
